@@ -2,12 +2,16 @@
 
 Die Datenschutzerklärung im [Impressum der Webseite](https://makerspace-gt.de/impressum/#datenschutzerklaerung) deckt bisher nur die Webseite ab. Diese Abschnitte ergänzen sie um die Verarbeitungen aus dem [Verzeichnis](../verarbeitungstaetigkeiten.md). Sie folgen dem Stil des bestehenden Textes. Platzhalter in spitzen Klammern ersetzen wir vor der Veröffentlichung. Das ist keine Rechtsberatung.
 
-Vor dem Einfügen prüfen wir im bestehenden Text:
+Anpassungen am bestehenden Text:
 
-- Werden noch Facebook-Plugins eingebunden? Sonst den Abschnitt entfernen
-- Ist die Kommentarfunktion noch aktiv? Sonst den Abschnitt entfernen
-- Setzt die Webseite überhaupt Cookies, die nicht technisch nötig sind? Sonst den Abschnitt kürzen
-- Sind die Verträge zur Auftragsverarbeitung mit 4830.org, Hetzner, sipgate und CrowdSec abgeschlossen? Erst dann dürfen die Abschnitte das so nennen
+- **Verantwortlicher.** Die Anschrift lautet nur noch Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh. Im Impressum und im Abschnitt Verantwortlicher anpassen
+- **Facebook Social Plugins.** Die Webseite bindet Instagram ein, nicht mehr Facebook. Den Abschnitt auf Instagram umschreiben, Anbieter bleibt die Meta Platforms Ireland Limited. Weil Meta beim Laden der Inhalte die IP-Adresse erhält und in der Regel Cookies setzt, laden die Inhalte erst nach einem Klick, mit Einwilligung nach Art. 6 Abs. 1 UAbs. 1 Buchst. a) DSGVO
+- **Kommentare.** Der Abschnitt bleibt. Ergänzen, wie lange die IP-Adressen gespeichert werden. WordPress speichert sie ohne Plugin unbegrenzt, passend zu unseren Fristen löschen wir sie nach 7 Tagen oder speichern sie gar nicht
+- **Cookies, Zählpixel und Mobile Identifier.** Die Webseite setzt nur technisch nötige Cookies. Den Abschnitt darauf kürzen, solange Instagram erst nach Klick lädt
+
+Vor der Veröffentlichung prüfen:
+
+- Sind die Verträge zur Auftragsverarbeitung mit 4830.org, Hetzner, sipgate und CrowdSec abgeschlossen? Bisher sind sie offen. Erst dann dürfen die Abschnitte das so nennen
 - Stimmen die Anschriften der Anbieter mit deren aktuellem Impressum überein?
 
 ---
