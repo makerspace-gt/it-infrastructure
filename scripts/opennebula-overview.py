@@ -61,7 +61,15 @@ def connect():
 
 
 def call(proxy, method, *args):
-    result = getattr(proxy, method)(*args)
+    try:
+        result = getattr(proxy, method)(*args)
+    except xmlrpc.client.ProtocolError as error:
+        sys.exit(
+            f"HTTP {error.errcode} {error.errmsg} from {os.environ['OPENNEBULA_ENDPOINT']}\n"
+            "Check OPENNEBULA_ENDPOINT, usually http(s)://<host>:2633/RPC2 without a slash before the port"
+        )
+    except OSError as error:
+        sys.exit(f"Cannot reach {os.environ['OPENNEBULA_ENDPOINT']}: {error}")
     if not result[0]:
         sys.exit(f"{method} failed: {result[1]}")
     return ET.fromstring(result[1])
