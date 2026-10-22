@@ -85,6 +85,7 @@ Umsetzung, Vorschlag:
 
 - **Einweisung als Gruppe in authentik.** Für jede Maschine gibt es eine Gruppe Einweisung, etwa Einweisung Lasercutter, und eine Gruppe Einweisende. Wer eingewiesen hat, nimmt die Person in die Gruppe auf. So sehen Engagierte in authentik oder im Forum, wer eine Maschine nutzen darf, ohne eine eigene Liste zu führen.
 - **Nachweis.** Die unterschriebene Bestätigung der Einweisung liegt zusätzlich im Ordner des Vorstands in Nextcloud, weil sie für Haftung und Versicherung zählt.
+- **Später eigener Dienst.** Statt Gruppen in authentik kann später Attraccess oder FabAccess die Einweisungen verwalten und Maschinen freischalten, siehe [Plan](../../PLAN.md#weitere-dienste). Dann kommt der Dienst in das Verzeichnis der Verarbeitungstätigkeiten, weil er auch die Nutzung der Maschinen erfasst.
 - **Löschung.** Die Gruppe endet mit dem Austritt. Den unterschriebenen Nachweis heben wir nach dem Austritt noch 3 Jahre auf, der regelmäßigen Verjährung nach [§ 195 BGB](https://www.gesetze-im-internet.de/bgb/__195.html).
 
 ## Offene Punkte
