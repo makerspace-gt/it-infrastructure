@@ -2,7 +2,7 @@
 
 Die IT-Infrastruktur des Makerspace Gütersloh als Code. VMs mit OpenTofu in OpenNebula, Dienste mit Ansible und Docker Compose, Zugang über NetBird und authentik.
 
-Den Stand des Neuaufbaus beschreibt der [Plan](PLAN.md). Die Quellen der eingesetzten Dienste liegen als Submodule unter `upstream/`. Das bisherige Repo [docker-compose-server](https://github.com/makerspace-gt/docker-compose-server) dient bis zum Abschluss des Umzugs als Nachschlagewerk.
+Den Stand des Neuaufbaus beschreibt der [Plan](PLAN.md). Wie man mit OpenTofu und Ansible startet, steht in der [Einrichtung](docs/einrichtung.md). Die Quellen der eingesetzten Dienste liegen als Submodule unter `upstream/`. Das bisherige Repo [docker-compose-server](https://github.com/makerspace-gt/docker-compose-server) dient bis zum Abschluss des Umzugs als Nachschlagewerk.
 
 ## Lizenz
 
