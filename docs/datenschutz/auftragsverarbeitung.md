@@ -21,7 +21,7 @@ Keine Auftragsverarbeitung, weil wir dort keine personenbezogenen Daten in unser
 | Open Repair Alliance | Erhält nur anonyme Daten über die anstiftung |
 | Hausbank des Vereins | Führt die Lastschriften für die Beiträge in eigener Verantwortung aus, nach eigenen gesetzlichen Pflichten. Sie ist Empfängerin, kein Auftragsverarbeiter |
 | Let's Encrypt | Stellt Zertifikate für Domains aus, keine personenbezogenen Daten |
-| OpenStreetMap Foundation | Der Eintrag des Vereins in der Karte enthält keine personenbezogenen Daten. Die Foundation betreibt Karten und Suche in eigener Verantwortung, siehe ihre [Datenschutzerklärung](https://osmfoundation.org/wiki/Privacy_Policy). Den Geo Location Service in Zammad schalten wir ab, sonst gingen die Adressen von Gästen an Nominatim, siehe [performs_geo_lookup.rb](https://github.com/zammad/zammad/blob/develop/app/models/user/performs_geo_lookup.rb). Binden wir eine Karte auf der Webseite ein, lädt sie erst nach Klick oder von eigenen Kacheln |
+| OpenStreetMap Foundation | Der Eintrag des Vereins in der Karte enthält keine personenbezogenen Daten. Die Foundation betreibt Karten und Suche in eigener Verantwortung, siehe ihre [Datenschutzerklärung](https://osmfoundation.org/wiki/Privacy_Policy). Zammad schickt die Adressfelder von Kunden an Nominatim, wenn sie gefüllt sind. Wir erfassen dort keine Adressen und schalten den Geo Location Service trotzdem ab, siehe [performs_geo_lookup.rb](https://github.com/zammad/zammad/blob/develop/app/models/user/performs_geo_lookup.rb). Binden wir eine Karte auf der Webseite ein, lädt sie erst nach Klick oder von eigenen Kacheln |
 
 ## Messenger
 
