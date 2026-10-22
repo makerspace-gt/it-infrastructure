@@ -2,3 +2,7 @@
 	path = upstream/zammad
 	url = https://github.com/zammad/zammad.git
 	shallow = true
+[submodule "upstream/zammad-docker-compose"]
+	path = upstream/zammad-docker-compose
+	url = https://github.com/zammad/zammad-docker-compose.git
+	shallow = true
