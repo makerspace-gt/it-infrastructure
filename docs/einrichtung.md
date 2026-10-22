@@ -16,41 +16,26 @@ Das Repo in VS Code öffnen und im Devcontainer neu öffnen. Beim ersten Start i
 
 ## 2 Geheimnisse setzen
 
-Zugangsdaten gehören nie ins Repo. Sie kommen als Umgebungsvariablen aus Vaultwarden.
+Zugangsdaten gehören nie ins Repo. Sie liegen in Vaultwarden und lokal in einer Datei tofu/.env, die in der .gitignore steht. Die Vorlage dafür ist [.env.example](../tofu/.env.example).
 
 ```bash
-export OPENNEBULA_ENDPOINT="https://<opennebula>:2633/RPC2"
-export OPENNEBULA_USERNAME="<benutzer>"
-export OPENNEBULA_PASSWORD="<passwort>"
+cd tofu
+cp .env.example .env
 ```
 
-Der State von OpenTofu wird verschlüsselt. Die Passphrase liegt in Vaultwarden und muss mindestens 16 Zeichen lang sein. Die Namen pbkdf2.main und aes_gcm.main dürfen nach dem ersten Lauf nicht mehr geändert werden, sonst lässt sich der State nicht mehr lesen.
+In tofu/.env tragt ihr die Zugangsdaten zu OpenNebula und die Passphrase für den State ein. Die Passphrase muss mindestens 16 Zeichen lang sein. Vor jeder Arbeit mit OpenTofu lädt [env.sh](../tofu/env.sh) die Datei und richtet die Verschlüsselung des State ein.
 
 ```bash
-export TOFU_STATE_PASSPHRASE="<passphrase aus vaultwarden>"
-export TF_ENCRYPTION=$(cat <<EOT
-key_provider "pbkdf2" "main" {
-  passphrase = "${TOFU_STATE_PASSPHRASE}"
-}
-method "aes_gcm" "main" {
-  keys = key_provider.pbkdf2.main
-}
-state {
-  method = method.aes_gcm.main
-}
-plan {
-  method = method.aes_gcm.main
-}
-EOT
-)
+source env.sh
 ```
 
-Das Passwort für den Ansible Vault legt ihr als Datei ansible/.vault_pass ab. Sie steht in der .gitignore.
+Die Namen pbkdf2.main und aes_gcm.main in env.sh dürfen nach dem ersten Lauf nicht mehr geändert werden, sonst lässt sich der State nicht mehr lesen.
+
+Das Passwort für den Ansible Vault legt ihr als Datei ansible/.vault_pass ab. Sie steht ebenfalls in der .gitignore.
 
 ## 3 Test-VM anlegen
 
 ```bash
-cd tofu
 cp terraform.tfvars.example terraform.tfvars
 tofu init
 tofu plan

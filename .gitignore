@@ -7,3 +7,6 @@
 *.tfstate.*
 *.tfplan
 crash.log
+
+# Local credentials for OpenTofu, see tofu/.env.example
+.env
