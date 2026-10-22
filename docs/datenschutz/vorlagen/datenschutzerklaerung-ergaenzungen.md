@@ -11,7 +11,7 @@ Anpassungen am bestehenden Text:
 
 Vor der Veröffentlichung prüfen:
 
-- Sind die Verträge zur Auftragsverarbeitung mit 4830.org, Hetzner, sipgate und CrowdSec abgeschlossen? Bisher sind sie offen. Erst dann dürfen die Abschnitte das so nennen
+- Sind die Verträge zur Auftragsverarbeitung mit 4830.org, Hetzner, sipgate, CrowdSec, Digitalcourage und GitHub abgeschlossen? Bisher sind sie offen. Erst dann dürfen die Abschnitte das so nennen
 - Stimmen die Anschriften der Anbieter mit deren aktuellem Impressum überein?
 - Ist im Instagram-Feed unter Einstellungen, Erweitert die Option GDPR auf Ja gesetzt? Bisher steht nur favorLocal, dann lädt das Plugin Bilder, die es noch nicht lokal gespeichert hat, direkt von cdninstagram.com. Erst mit GDPR auf Ja kommen alle Bilder von unserer Webseite, siehe [GDPR Compliance](https://smashballoon.com/doc/instagram-feed-gdpr-compliance/)
 
@@ -33,7 +33,7 @@ Im Repair Café unterstützt das Sprachmodell MANUEL unsere Engagierten. Es schl
 
 ## Newsletter des Repair Cafés
 
-Auf Wunsch tragen wir die E-Mail-Adresse von Gästen für den Newsletter des Repair Cafés auf der Plattform reparatur-initiativen.org der anstiftung, <Anschrift der anstiftung>, ein. Die Anmeldung bestätigen Gäste selbst per E-Mail, für den Versand ist die anstiftung verantwortlich. Rechtsgrundlage ist die Einwilligung nach Art. 6 Abs. 1 UAbs. 1 Buchst. a) DSGVO. Eine Abmeldung ist jederzeit über den Link in jeder E-Mail möglich.
+Auf Wunsch tragen wir die E-Mail-Adresse von Gästen für den Newsletter des Repair Cafés auf der Plattform reparatur-initiativen.org der anstiftung, Daiserstraße 15, Rückgebäude, 81371 München, ein. Die Anmeldung bestätigen Gäste selbst per E-Mail, für den Versand ist die anstiftung verantwortlich. Rechtsgrundlage ist die Einwilligung nach Art. 6 Abs. 1 UAbs. 1 Buchst. a) DSGVO. Eine Abmeldung ist jederzeit über den Link in jeder E-Mail möglich.
 
 ## Dienste für Mitglieder und Engagierte
 
@@ -59,7 +59,7 @@ Rechtsgrundlage für unsere Auftritte ist Art. 6 Abs. 1 UAbs. 1 Buchst. f) DSGVO
 
 Für die Abstimmung unter Mitgliedern und Engagierten nutzen wir Gruppen in Signal und WhatsApp. Die Teilnahme ist freiwillig, alle wichtigen Informationen gibt es auch per E-Mail oder im Forum. In Gruppen sehen alle Teilnehmenden die Telefonnummern der anderen. WhatsApp wird von Meta betrieben und gleicht das Adressbuch der Nutzer mit den Servern von Meta ab.
 
-Telefonate führen wir über die sipgate GmbH, <Anschrift laut Impressum von sipgate>, als Auftragsverarbeiter.
+Telefonate führen wir über die sipgate GmbH, Gladbacher Straße 74, 40219 Düsseldorf, als Auftragsverarbeiter.
 
 ## Beschwerderecht
 

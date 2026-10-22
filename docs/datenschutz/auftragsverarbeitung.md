@@ -4,12 +4,12 @@ Diese Übersicht zeigt, welche Dienstleister in unserem Auftrag personenbezogene
 
 | Anbieter | Leistung | Daten | Ort | AVV | Stand |
 |---|---|---|---|---|---|
-| 4830.org e.V., Verein hinter der Freifunk-Community Kreis Gütersloh | VMs in OpenNebula für alle Dienste | Alle Daten der Dienste | Deutschland, zu prüfen | Offen | |
+| 4830.org e.V., Verein hinter der Freifunk-Community Kreis Gütersloh | VMs in OpenNebula für alle Dienste | Alle Daten der Dienste | Deutschland, laut Namen der Cluster Frankfurt, Berlin und Hamburg, im AVV festhalten | Offen | |
 | Hetzner | Storagebox für Backups und Dateien von Nextcloud | Verschlüsselte Backups, Dateien von Nextcloud | Deutschland, siehe [Datenschutz-FAQ](https://docs.hetzner.com/de/general/general-terms-and-conditions/data-privacy-faq/) | Offen, Hetzner bietet den AVV in der Verwaltungsoberfläche an | |
 | lima-city | Domain, DNS, Webseite, E-Mail | Inhalte der Webseite, E-Mails | Deutschland | Abgeschlossen | Datum nachtragen |
-| GitHub | Bisher Hauptort für Code, Container-Images, später eventuell nur Spiegel | Namen und E-Mail in Commits, Konten der Mitwirkenden | USA, nach [Art. 44 DSGVO](https://dsgvo-gesetz.de/art-44-dsgvo/) zu bewerten, GitHub ist über Microsoft nach dem [Data Privacy Framework](https://www.dataprivacyframework.gov/list) zertifiziert, zu prüfen | Offen, zu prüfen, ob GitHub für unsere Organisation einen AVV anbietet | |
+| GitHub | Bisher Hauptort für Code, Container-Images, später eventuell nur Spiegel | Namen und E-Mail in Commits, Konten der Mitwirkenden | USA, nach [Art. 44 DSGVO](https://dsgvo-gesetz.de/art-44-dsgvo/) zulässig, weil GitHub nach dem Data Privacy Framework zertifiziert ist, siehe [Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement#data-privacy-framework-dpf) | Offen, die Organisation [wechselt zur GitHub Customer Agreement](https://docs.github.com/en/organizations/managing-organization-settings/upgrading-to-the-github-customer-agreement), die das Data Protection Agreement enthält | |
 | CrowdSec | Reputation von IP-Adressen | IP-Adressen auffälliger Anfragen | Frankreich | Offen | |
-| Digitalcourage mit Nuudel | Terminabfragen | Namen und Verfügbarkeit | Deutschland | Zu prüfen, ob ein AVV angeboten wird | |
+| Digitalcourage mit Nuudel | Terminabfragen | Namen und Verfügbarkeit | Deutschland | Offen, Digitalcourage bietet einen [AVV für Nuudel](https://digitalcourage.de/avv-nuudel) zum Unterschreiben an | |
 | sipgate | Telefonie | Rufnummern, Verbindungsdaten, Anrufbeantworter, gegebenenfalls SMS | Deutschland, siehe [Datenschutz](https://www.sipgate.de/datenschutz) | Offen | |
 
 Keine Auftragsverarbeitung, weil wir dort keine personenbezogenen Daten in unserem Auftrag verarbeiten lassen oder die Anbieter in eigener Verantwortung handeln:

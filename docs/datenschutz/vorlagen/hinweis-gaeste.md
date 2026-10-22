@@ -16,4 +16,4 @@ Auf Wunsch tragen wir deine E-Mail-Adresse für den Newsletter des Repair Cafés
 
 Du hast das Recht auf Auskunft, Berichtigung, Löschung und Widerspruch. Wende dich dafür an <E-Mail für Datenschutz>. Du kannst dich auch bei der Landesbeauftragten für Datenschutz NRW beschweren.
 
-Verantwortlich ist der Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh. Mehr steht in unserer Datenschutzerklärung unter <Link>.
+Verantwortlich ist der Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh. Mehr steht in unserer Datenschutzerklärung unter makerspace-gt.de/impressum/#datenschutzerklaerung.
