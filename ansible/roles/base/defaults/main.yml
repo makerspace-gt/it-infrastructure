@@ -7,6 +7,10 @@ base_locales:
 # Unattended upgrades reboot the host at this time if a reboot is required
 base_reboot_time: "02:00"
 
+# Logs often contain IP addresses, keep them only as long as needed for security
+base_log_retention: 7day
+base_log_max_use: 1G
+
 # Keep root login with key until all admins have tested their own account
 base_disable_root_login: false
 

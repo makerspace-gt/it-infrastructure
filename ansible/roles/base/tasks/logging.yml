@@ -1,0 +1,31 @@
+---
+# Container and system logs go to the journal, journald deletes them after the retention time.
+# See docs/datenschutz/verarbeitungen.md
+- name: Create journald config directory
+  ansible.builtin.file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: "0755"
+
+- name: Configure journald retention
+  ansible.builtin.template:
+    src: 50-retention.conf.j2
+    dest: /etc/systemd/journald.conf.d/50-retention.conf
+    mode: "0644"
+  notify: Restart journald
+
+- name: Create Docker config directory
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: "0755"
+
+- name: Send container logs to the journal
+  ansible.builtin.copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "log-driver": "journald"
+      }
+    mode: "0644"
+  notify: Restart Docker

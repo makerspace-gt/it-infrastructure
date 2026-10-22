@@ -21,6 +21,9 @@
 - name: Configure unattended upgrades
   ansible.builtin.import_tasks: unattended_upgrades.yml
 
+- name: Configure log retention
+  ansible.builtin.import_tasks: logging.yml
+
 - name: Install Docker
   ansible.builtin.import_tasks: docker.yml
 
