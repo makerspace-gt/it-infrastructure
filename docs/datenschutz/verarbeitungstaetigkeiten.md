@@ -19,7 +19,7 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 | 7 | Fotos von Veranstaltungen | Immich |
 | 8 | Aufgaben und Projekte | Vikunja |
 | 9 | Code und Dokumentation | Forgejo, GitHub |
-| 10 | Neuigkeiten des Repair Cafés | reparatur-initiativen.org |
+| 10 | Newsletter des Repair Cafés | reparatur-initiativen.org |
 | 11 | Statistik zu Reparaturen | n8n, reparatur-initiativen.org, Open Repair Alliance |
 | 12 | Terminabfragen unter Engagierten | Nuudel |
 | 13 | Kommunikation und Benachrichtigungen | Signal, signal-cli-rest-api, gegebenenfalls WhatsApp |
@@ -121,13 +121,13 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 - **Drittland:** Spiegelung nach GitHub in den USA, siehe [Auftragsverarbeitung](auftragsverarbeitung.md)
 - **Löschung:** Konten nach Austritt, Commits bleiben Teil der Historie
 
-### 10 Neuigkeiten des Repair Cafés
+### 10 Newsletter des Repair Cafés
 
-- **Zweck:** Gäste über Termine informieren
+- **Zweck:** Gäste über Termine des Repair Cafés informieren, der Versand läuft über reparatur-initiativen.org
 - **Betroffene:** Gäste mit Einwilligung
 - **Daten:** E-Mail
-- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. a DSGVO mit Double-Opt-in
-- **Empfänger:** Plattform reparatur-initiativen.org der anstiftung
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. a DSGVO mit Double-Opt-in. Die Einwilligung nennt die anstiftung als Empfängerin der E-Mail-Adresse
+- **Empfänger:** Plattform reparatur-initiativen.org der anstiftung, Einordnung siehe [Auftragsverarbeitung](auftragsverarbeitung.md)
 - **Drittland:** Nein
 - **Löschung:** Bei Abmeldung
 

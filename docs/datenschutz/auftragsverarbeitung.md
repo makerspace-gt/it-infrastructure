@@ -10,13 +10,14 @@ Diese Übersicht zeigt, welche Dienstleister in unserem Auftrag personenbezogene
 | GitHub | Spiegel öffentlicher Repos, Container-Images | Namen und E-Mail in Commits | USA, nach [Art. 44 DSGVO](https://dsgvo-gesetz.de/art-44-dsgvo/) zu bewerten | Offen | |
 | CrowdSec | Reputation von IP-Adressen | IP-Adressen auffälliger Anfragen | Frankreich | Offen | |
 | Digitalcourage mit Nuudel | Terminabfragen | Namen und Verfügbarkeit | Deutschland | Zu prüfen, ob ein AVV angeboten wird | |
+| anstiftung mit reparatur-initiativen.org | Versand des Newsletters des Repair Cafés | E-Mail-Adressen der Gäste mit Einwilligung | Deutschland | Zu klären, ob die anstiftung dafür in unserem Auftrag handelt, dann mit AVV, oder als eigener Verantwortlicher, dann ohne AVV und mit Hinweis in der Einwilligung | |
 | sipgate | Telefonie | Rufnummern, Verbindungsdaten, Anrufbeantworter, gegebenenfalls SMS | Deutschland, siehe [Datenschutz](https://www.sipgate.de/datenschutz) | Offen | |
 
 Keine Auftragsverarbeitung, weil wir dort keine personenbezogenen Daten in unserem Auftrag verarbeiten lassen oder die Anbieter in eigener Verantwortung handeln:
 
 | Anbieter | Begründung |
 |---|---|
-| anstiftung mit reparatur-initiativen.org | Laufzettel sind anonym. Für die Neuigkeiten des Repair Cafés melden sich Gäste selbst an, die Plattform ist dafür eigenverantwortlich |
+| anstiftung mit reparatur-initiativen.org für Laufzettel | Laufzettel sind anonym |
 | Open Repair Alliance | Erhält nur anonyme Daten über die anstiftung |
 | Let's Encrypt | Stellt Zertifikate für Domains aus, keine personenbezogenen Daten |
 
