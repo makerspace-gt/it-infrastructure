@@ -27,6 +27,7 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 | 15 | Mitgliederverwaltung | Zu ergänzen |
 | 16 | Webseite | WordPress bei lima-city |
 | 17 | Telefonie | sipgate |
+| 18 | Öffentlichkeitsarbeit in sozialen Medien | Instagram, gegebenenfalls Google |
 
 ## Einzelheiten
 
@@ -187,3 +188,13 @@ Die Angaben stehen in der Datenschutzerklärung der Webseite.
 - **Empfänger:** Zuständige Engagierte, sipgate als Auftragsverarbeiter
 - **Drittland:** Nein
 - **Löschung:** Verbindungsdaten nach den Einstellungen bei sipgate, Nachrichten nach Übernahme ins Ticket
+
+### 18 Öffentlichkeitsarbeit in sozialen Medien
+
+- **Zweck:** Über den Verein, das Repair Café und Veranstaltungen informieren
+- **Betroffene:** Besucher des Profils, abgebildete Personen
+- **Daten:** Veröffentlichte Beiträge und Fotos, Statistiken über Besucher des Profils, Nachrichten an den Verein
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. f DSGVO für den Auftritt, lit. a für Fotos von Personen
+- **Empfänger:** Öffentlich, Meta als gemeinsam Verantwortlicher für die Statistiken, siehe [Auftragsverarbeitung](auftragsverarbeitung.md#soziale-medien-und-google)
+- **Drittland:** USA
+- **Löschung:** Beiträge auf Wunsch abgebildeter Personen, Nachrichten nach Übernahme ins Ticket

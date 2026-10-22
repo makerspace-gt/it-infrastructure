@@ -39,4 +39,11 @@ Daraus folgt für uns:
 - **Teilnahme ist freiwillig.** Niemand muss einen Messenger nutzen, wichtige Informationen gibt es auch per E-Mail oder im Forum.
 - **WhatsApp nur, wo es nicht anders geht.** Falls Gäste den Verein über WhatsApp erreichen, dann über ein eigenes Gerät oder Konto des Vereins ohne Adressbuch, mit Hinweis in der Datenschutzerklärung. Daten aus solchen Chats kommen ins Ticket und werden im Messenger gelöscht.
 
+## Soziale Medien und Google
+
+| Dienst | Nutzung | Einordnung |
+|---|---|---|
+| Instagram | Auftritt des Vereins | Für die Statistiken über Besucher des Profils sind wir mit Meta gemeinsam verantwortlich nach [Art. 26 DSGVO](https://dsgvo-gesetz.de/art-26-dsgvo/), so hat der EuGH für Fanpages entschieden ([C-210/16](https://curia.europa.eu/juris/liste.jsf?num=C-210/16)). Meta regelt das in einer [Vereinbarung für Seiten-Insights](https://www.facebook.com/legal/terms/page_controller_addendum). In der Datenschutzerklärung nennen wir den Auftritt, Meta als gemeinsam Verantwortlichen und das Wesentliche der Vereinbarung. Fotos von Personen veröffentlichen wir nur mit Einwilligung |
+| Google | Zu klären, welche Dienste wir nutzen | Ein Eintrag bei Google Maps über das [Unternehmensprofil](https://support.google.com/business/answer/3038177) verarbeitet Bewertungen in Verantwortung von Google, ein AVV ist nicht nötig. Für Dienste wie Google Workspace, Kalender oder Formulare mit personenbezogenen Daten gelten die [Bedingungen zur Auftragsverarbeitung](https://business.safety.google/processorterms/) von Google, dann gehört Google in die Tabelle oben. Google Analytics auf der Webseite bräuchte eine Einwilligung |
+
 Spalte Stand bekommt das Datum des Vertrags. Ändert sich ein Anbieter, wird diese Datei im selben Commit angepasst.
