@@ -66,6 +66,11 @@ state-push message:
     git diff --cached --quiet || git commit -m "{{ message }}"
     git push
 
+# Show clusters, hosts, networks, datastores, templates and VMs in OpenNebula
+[group('opennebula')]
+overview *sections:
+    python3 scripts/opennebula-overview.py {{ sections }}
+
 # First run of the base role as root, before admin accounts exist
 [group('ansible')]
 bootstrap limit="all":

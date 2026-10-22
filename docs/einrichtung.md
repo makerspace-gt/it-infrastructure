@@ -30,6 +30,15 @@ Das legt tofu/.env und tofu/terraform.tfvars aus den Vorlagen an, falls sie fehl
 
 Die Rezepte laden tofu/.env über [env.sh](../tofu/env.sh) und richten dabei die Verschlüsselung des State ein. Die Namen pbkdf2.main und aes_gcm.main in env.sh dürfen nach dem ersten Lauf nicht mehr geändert werden, sonst lässt sich der State nicht mehr lesen.
 
+Was es in OpenNebula gibt, zeigt eine Übersicht über die API. Sie nutzt dieselben Zugangsdaten aus tofu/.env und ändert nichts.
+
+```bash
+just overview
+just overview cluster netze
+```
+
+Daraus übernehmt ihr die Namen von Vorlage, Clustern und Netzen in tofu/terraform.tfvars.
+
 ## 3 Test-VM anlegen
 
 ```bash

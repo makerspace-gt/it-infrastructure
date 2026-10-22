@@ -71,6 +71,17 @@
       }
     },
     {
+      "label": "just: opennebula overview",
+      "type": "shell",
+      "command": "just overview",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
       "label": "just: state-check",
       "type": "shell",
       "command": "just state-check",
