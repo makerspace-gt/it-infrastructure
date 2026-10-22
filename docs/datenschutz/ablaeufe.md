@@ -1,6 +1,6 @@
 # Abläufe
 
-Diese Abläufe regeln, wie wir mit Anfragen von Betroffenen und mit Datenpannen umgehen. Beides bearbeiten wir in einer eigenen Gruppe Datenschutz in Zammad, die nur der Vorstand und die Ansprechpersonen für den Datenschutz sehen. Das ist keine Rechtsberatung.
+Diese Abläufe regeln, wie wir mit Anfragen von Betroffenen und mit Datenpannen umgehen. Anfragen kommen über datenschutz@makerspace-gt.de in eine eigene Gruppe Datenschutz in Zammad, die nur der Vorstand sieht. Dort bearbeiten wir auch Datenpannen. Das ist keine Rechtsberatung.
 
 ## Anfragen von Betroffenen
 

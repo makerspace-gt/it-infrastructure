@@ -17,9 +17,9 @@ Vor der Veröffentlichung prüfen:
 
 ---
 
-## Ansprechpersonen für den Datenschutz
+## Ansprechpartner für den Datenschutz
 
-Fragen zum Datenschutz und Anfragen zu den Rechten betroffener Personen richten Nutzer an <E-Mail für Datenschutz>. Wir antworten innerhalb eines Monats.
+Fragen zum Datenschutz und Anfragen zu den Rechten betroffener Personen richten Nutzer an den Vorstand unter datenschutz@makerspace-gt.de. Wir antworten innerhalb eines Monats.
 
 ## Repair Café
 

@@ -4,7 +4,7 @@ Diese Übersicht enthält die Angaben des Verzeichnisses von Verarbeitungstätig
 
 ## Verantwortlicher
 
-Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh, vertreten durch den Vorstand. Ansprechpersonen für den Datenschutz pflegen wir privat und nennen sie in der Datenschutzerklärung der Webseite.
+Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh, vertreten durch den Vorstand. Ansprechpartner für den Datenschutz ist der Vorstand, erreichbar unter datenschutz@makerspace-gt.de.
 
 ## Übersicht
 
