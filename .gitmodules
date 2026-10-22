@@ -58,3 +58,7 @@
 	path = upstream/languagetool
 	url = https://github.com/languagetool-org/languagetool.git
 	shallow = true
+[submodule "upstream/vaultwarden"]
+	path = upstream/vaultwarden
+	url = https://github.com/dani-garcia/vaultwarden.git
+	shallow = true
