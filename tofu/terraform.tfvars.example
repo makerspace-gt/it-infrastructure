@@ -1,17 +1,18 @@
 # Copy to terraform.tfvars and adjust. terraform.tfvars contains no secrets and is committed.
 template_name = "Debian 13 host-passthrough"
 
-# A location is a cluster with the network its hosts share.
+# A location is a cluster with the network its hosts share. Our user may not read
+# the cluster pool, so clusters are given by ID, see just overview.
 # hosts is optional and restricts the location to some hosts of the cluster.
 locations = {
   example = {
-    cluster = "cluster-name"
-    network = "network-name"
+    cluster_id = 100
+    network    = "network-name"
   }
   example2 = {
-    cluster = "cluster-name-2"
-    hosts   = ["host3.example.org"]
-    network = "network-name-2"
+    cluster_id = 101
+    hosts      = ["host3.example.org"]
+    network    = "network-name-2"
   }
 }
 

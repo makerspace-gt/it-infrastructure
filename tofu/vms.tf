@@ -16,7 +16,7 @@ locals {
 
   vm_sched_requirements = {
     for name, location in local.vm_locations : name => join(" & ", compact([
-      location.cluster == null ? "" : "CLUSTER_ID = ${data.opennebula_cluster.cluster[location.cluster].id}",
+      location.cluster_id == null ? "" : "CLUSTER_ID = ${location.cluster_id}",
       length(location.hosts) == 0 ? "" : "(${join(" | ", [for host in location.hosts : "HOSTNAME = \"${host}\""])})",
     ]))
   }
@@ -24,11 +24,6 @@ locals {
 
 data "opennebula_template" "debian" {
   name = var.template_name
-}
-
-data "opennebula_cluster" "cluster" {
-  for_each = toset(compact([for location in values(local.vm_locations) : location.cluster]))
-  name     = each.key
 }
 
 data "opennebula_virtual_network" "network" {

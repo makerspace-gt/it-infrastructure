@@ -7,9 +7,9 @@ variable "template_name" {
 variable "locations" {
   description = "A cluster or a set of hosts and the network they share. VMs refer to a location by its key."
   type = map(object({
-    cluster = optional(string)
-    hosts   = optional(list(string), [])
-    network = string
+    cluster_id = optional(number)
+    hosts      = optional(list(string), [])
+    network    = string
   }))
 }
 

@@ -17,8 +17,8 @@ from pathlib import Path
 
 ENV_FILE = Path(__file__).resolve().parent.parent / "tofu" / ".env"
 
-# Filter flag -1: resources of the user and all of the user's groups
-FILTER_USER_AND_GROUPS = -1
+# Filter flag -2: all resources the user may use, including those shared via ACLs
+FILTER_ALL = -2
 # VM state -1: any state except DONE
 VM_STATE_NOT_DONE = -1
 
@@ -98,6 +98,13 @@ def clusters(proxy, session):
     pool = call(proxy, "one.clusterpool.info", session)
     rows = [[text(c, "ID"), text(c, "NAME"), ids(c, "HOSTS/ID"), ids(c, "VNETS/ID"), ids(c, "DATASTORES/ID")]
             for c in pool.findall("CLUSTER")]
+    if not rows:
+        # Without permission on the cluster pool, derive the clusters from the hosts
+        hosts = call(proxy, "one.hostpool.info", session).findall("HOST")
+        found = {}
+        for h in hosts:
+            found.setdefault((text(h, "CLUSTER_ID"), text(h, "CLUSTER")), []).append(text(h, "NAME"))
+        rows = [[cid, name, ", ".join(names), "-", "-"] for (cid, name), names in sorted(found.items())]
     table("Cluster", ["ID", "NAME", "HOSTS", "NETZE", "DATASTORES"], rows)
 
 
@@ -110,7 +117,7 @@ def hosts(proxy, session):
 
 
 def networks(proxy, session):
-    pool = call(proxy, "one.vnpool.info", session, FILTER_USER_AND_GROUPS, -1, -1)
+    pool = call(proxy, "one.vnpool.info", session, FILTER_ALL, -1, -1)
     rows = []
     for n in pool.findall("VNET"):
         ranges = "; ".join(f'{text(ar, "IP", text(ar, "MAC"))} +{text(ar, "SIZE")}' for ar in n.findall("AR_POOL/AR")) or "-"
@@ -126,17 +133,17 @@ def datastores(proxy, session):
 
 
 def templates(proxy, session):
-    pool = call(proxy, "one.templatepool.info", session, FILTER_USER_AND_GROUPS, -1, -1)
+    pool = call(proxy, "one.templatepool.info", session, FILTER_ALL, -1, -1)
     rows = [[text(t, "ID"), text(t, "NAME"), text(t, "UNAME"), text(t, "GNAME")] for t in pool.findall("VMTEMPLATE")]
     table("Vorlagen", ["ID", "NAME", "BESITZER", "GRUPPE"], rows)
 
 
 def vms(proxy, session):
     try:
-        pool = call(proxy, "one.vmpool.info", session, FILTER_USER_AND_GROUPS, -1, -1, VM_STATE_NOT_DONE, "")
+        pool = call(proxy, "one.vmpool.info", session, FILTER_ALL, -1, -1, VM_STATE_NOT_DONE, "")
     except xmlrpc.client.Fault:
         # Older OpenNebula versions take no filter string
-        pool = call(proxy, "one.vmpool.info", session, FILTER_USER_AND_GROUPS, -1, -1, VM_STATE_NOT_DONE)
+        pool = call(proxy, "one.vmpool.info", session, FILTER_ALL, -1, -1, VM_STATE_NOT_DONE)
     rows = []
     for v in pool.findall("VM"):
         history = v.findall("HISTORY_RECORDS/HISTORY")
