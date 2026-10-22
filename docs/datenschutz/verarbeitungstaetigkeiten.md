@@ -22,12 +22,12 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 | 10 | Newsletter des Repair Cafés | reparatur-initiativen.org |
 | 11 | Statistik zu Reparaturen | n8n, reparatur-initiativen.org, Open Repair Alliance |
 | 12 | Terminabfragen unter Engagierten | Nuudel |
-| 13 | Kommunikation und Benachrichtigungen | Signal, signal-cli-rest-api, gegebenenfalls WhatsApp |
+| 13 | Kommunikation und Benachrichtigungen | Signal, signal-cli-rest-api, WhatsApp-Gruppen |
 | 14 | Betrieb und Sicherheit der IT | Logs, CrowdSec, Backups, Uptime Kuma, Beszel |
-| 15 | Mitgliederverwaltung | Zu ergänzen |
+| 15 | Mitgliederverwaltung | Software auf dem Rechner des Kassenwarts, Online-Banking |
 | 16 | Webseite | WordPress bei lima-city |
 | 17 | Telefonie | sipgate |
-| 18 | Öffentlichkeitsarbeit in sozialen Medien | Instagram, gegebenenfalls Google |
+| 18 | Öffentlichkeitsarbeit in sozialen Medien | Instagram, YouTube, Unternehmensprofil bei Google Maps |
 
 ## Einzelheiten
 
@@ -156,7 +156,8 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 
 - **Zweck:** Abstimmung im Verein, Benachrichtigungen der Admins und Engagierten
 - **Betroffene:** Mitglieder und Engagierte in den Gruppen
-- **Daten:** Telefonnummer, Nachrichten
+- **Daten:** Telefonnummer, Name im Profil, Nachrichten. In Gruppen sehen alle Teilnehmenden die Telefonnummern der anderen
+- **Hinweis:** Die Teilnahme an Gruppen in Signal und WhatsApp ist freiwillig. Wichtige Informationen gibt es auch per E-Mail oder im Forum. Neue Gruppen legen wir bevorzugt in Signal an
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. a und b DSGVO
 - **Empfänger:** Mitglieder der jeweiligen Gruppe
 - **Drittland:** Signal und WhatsApp werden aus den USA betrieben, die Inhalte sind Ende-zu-Ende verschlüsselt. Einordnung siehe [Auftragsverarbeitung](auftragsverarbeitung.md#messenger)
@@ -181,7 +182,7 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 - **Empfänger:** Vorstand und Kassenwart, die Hausbank des Vereins für den Einzug der Lastschriften als eigener Verantwortlicher
 - **Drittland:** Nein
 - **Löschung:** Stammdaten nach Ende der Mitgliedschaft, soweit keine Aufbewahrungspflicht besteht. Buchungsbelege 10 Jahre. SEPA-Mandate mindestens 14 Monate nach dem letzten Einzug, wegen möglicher Rückforderungen
-- **Werkzeug:** Zu ergänzen
+- **Werkzeug:** Software lokal auf dem Rechner des Kassenwarts, kein Auftragsverarbeiter. Der Rechner ist verschlüsselt, mit Passwort gesperrt und wird gesichert, siehe technische und organisatorische Maßnahmen
 
 ### 16 Webseite
 
@@ -200,9 +201,9 @@ Die Angaben stehen in der Datenschutzerklärung der Webseite.
 ### 18 Öffentlichkeitsarbeit in sozialen Medien
 
 - **Zweck:** Über den Verein, das Repair Café und Veranstaltungen informieren
-- **Betroffene:** Besucher des Profils, abgebildete Personen
-- **Daten:** Veröffentlichte Beiträge und Fotos, Statistiken über Besucher des Profils, Nachrichten an den Verein
+- **Betroffene:** Besucher der Profile und des Kanals, abgebildete Personen, Bewertende bei Google Maps
+- **Daten:** Veröffentlichte Beiträge, Fotos und Videos, Statistiken über Besucher, Nachrichten an den Verein, Bewertungen
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. f DSGVO für den Auftritt, lit. a für Fotos von Personen
-- **Empfänger:** Öffentlich, Meta als gemeinsam Verantwortlicher für die Statistiken, siehe [Auftragsverarbeitung](auftragsverarbeitung.md#soziale-medien-und-google)
+- **Empfänger:** Öffentlich, Meta als gemeinsam Verantwortlicher für die Statistiken bei Instagram, Google für YouTube und Google Maps, siehe [Auftragsverarbeitung](auftragsverarbeitung.md#soziale-medien-und-google)
 - **Drittland:** USA
 - **Löschung:** Beiträge auf Wunsch abgebildeter Personen, Nachrichten nach Übernahme ins Ticket

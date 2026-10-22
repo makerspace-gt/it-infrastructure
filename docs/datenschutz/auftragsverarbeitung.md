@@ -5,7 +5,7 @@ Diese Übersicht zeigt, welche Dienstleister in unserem Auftrag personenbezogene
 | Anbieter | Leistung | Daten | Ort | AVV | Stand |
 |---|---|---|---|---|---|
 | Betreiber von OpenNebula unter 4830.org | VMs für alle Dienste | Alle Daten der Dienste | Deutschland, zu prüfen | Offen | |
-| Hetzner | Storagebox für Backups und Dateien von Nextcloud | Verschlüsselte Backups, Dateien von Nextcloud | Deutschland oder Finnland, je nach gewähltem Standort der Storagebox, siehe [Datenschutz-FAQ](https://docs.hetzner.com/de/general/general-terms-and-conditions/data-privacy-faq/) | Offen, Hetzner bietet den AVV in der Verwaltungsoberfläche an | |
+| Hetzner | Storagebox für Backups und Dateien von Nextcloud | Verschlüsselte Backups, Dateien von Nextcloud | Deutschland, siehe [Datenschutz-FAQ](https://docs.hetzner.com/de/general/general-terms-and-conditions/data-privacy-faq/) | Offen, Hetzner bietet den AVV in der Verwaltungsoberfläche an | |
 | lima-city | Domain, DNS, Webseite, E-Mail | Inhalte der Webseite, E-Mails | Deutschland | Offen | |
 | GitHub | Spiegel öffentlicher Repos, Container-Images | Namen und E-Mail in Commits | USA, nach [Art. 44 DSGVO](https://dsgvo-gesetz.de/art-44-dsgvo/) zu bewerten | Offen | |
 | CrowdSec | Reputation von IP-Adressen | IP-Adressen auffälliger Anfragen | Frankreich | Offen | |
@@ -37,15 +37,16 @@ Signal und WhatsApp sind keine Auftragsverarbeiter in unserem Auftrag. Beide bie
 
 Daraus folgt für uns:
 
-- **Signal ist der Messenger des Vereins.** Gruppen und Benachrichtigungen über signal-cli-rest-api laufen über Signal.
+- **Signal ist der bevorzugte Messenger des Vereins.** Benachrichtigungen über signal-cli-rest-api und neue Gruppen laufen über Signal. Bestehende Gruppen in WhatsApp bleiben, wir weisen aber auf die Weitergabe der Kontakte an Meta hin.
 - **Teilnahme ist freiwillig.** Niemand muss einen Messenger nutzen, wichtige Informationen gibt es auch per E-Mail oder im Forum.
-- **WhatsApp nur, wo es nicht anders geht.** Falls Gäste den Verein über WhatsApp erreichen, dann über ein eigenes Gerät oder Konto des Vereins ohne Adressbuch, mit Hinweis in der Datenschutzerklärung. Daten aus solchen Chats kommen ins Ticket und werden im Messenger gelöscht.
+- **Gruppen in WhatsApp.** Für die Gruppen des Vereins sind wir verantwortlich. In der Beschreibung jeder Gruppe steht ein kurzer Hinweis auf den Datenschutz und die Alternative per E-Mail oder Forum. Wer eine Gruppe verwaltet, nimmt nur Mitglieder auf, die beitreten wollen.
 
 ## Soziale Medien und Google
 
 | Dienst | Nutzung | Einordnung |
 |---|---|---|
 | Instagram | Auftritt des Vereins | Für die Statistiken über Besucher des Profils sind wir mit Meta gemeinsam verantwortlich nach [Art. 26 DSGVO](https://dsgvo-gesetz.de/art-26-dsgvo/), so hat der EuGH für Fanpages entschieden ([C-210/16](https://curia.europa.eu/juris/liste.jsf?num=C-210/16)). Meta regelt das in einer [Vereinbarung für Seiten-Insights](https://www.facebook.com/legal/terms/page_controller_addendum). In der Datenschutzerklärung nennen wir den Auftritt, Meta als gemeinsam Verantwortlichen und das Wesentliche der Vereinbarung. Fotos von Personen veröffentlichen wir nur mit Einwilligung |
-| Google | Zu klären, welche Dienste wir nutzen | Ein Eintrag bei Google Maps über das [Unternehmensprofil](https://support.google.com/business/answer/3038177) verarbeitet Bewertungen in Verantwortung von Google, ein AVV ist nicht nötig. Für Dienste wie Google Workspace, Kalender oder Formulare mit personenbezogenen Daten gelten die [Bedingungen zur Auftragsverarbeitung](https://business.safety.google/processorterms/) von Google, dann gehört Google in die Tabelle oben. Google Analytics auf der Webseite bräuchte eine Einwilligung |
+| Google Maps | Unternehmensprofil des Vereins | Google verarbeitet Bewertungen und Besucherdaten in eigener Verantwortung, ein AVV ist nicht nötig. In der Datenschutzerklärung erwähnen wir das Profil |
+| YouTube | Kanal des Vereins | Google ist für YouTube selbst verantwortlich. Für die Statistiken über Zuschauer des Kanals ist eine gemeinsame Verantwortung wie bei Instagram denkbar, das klären wir bei der Datenschutzerklärung. Videos mit Personen veröffentlichen wir nur mit Einwilligung. Werden Videos auf der Webseite eingebettet, laden sie erst nach Klick |
 
 Spalte Stand bekommt das Datum des Vertrags. Ändert sich ein Anbieter, wird diese Datei im selben Commit angepasst.
