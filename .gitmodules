@@ -54,3 +54,7 @@
 	path = upstream/immich
 	url = https://github.com/immich-app/immich.git
 	shallow = true
+[submodule "upstream/languagetool"]
+	path = upstream/languagetool
+	url = https://github.com/languagetool-org/languagetool.git
+	shallow = true
