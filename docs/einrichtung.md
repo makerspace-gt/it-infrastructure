@@ -26,7 +26,7 @@ Zugangsdaten gehören nie ins Repo. Sie liegen in Vaultwarden und lokal in Datei
 just setup
 ```
 
-Das legt tofu/.env und tofu/terraform.tfvars aus den Vorlagen an, falls sie fehlen. In tofu/.env tragt ihr die Zugangsdaten zu OpenNebula und die Passphrase für den State ein, die mindestens 16 Zeichen lang sein muss. In tofu/terraform.tfvars stehen die Namen der Debian-Vorlage und des Netzes, die keine Geheimnisse sind. Das Passwort für den Ansible Vault legt ihr als Datei ansible/.vault_pass ab.
+Das legt tofu/.env und tofu/terraform.tfvars aus den Vorlagen an, falls sie fehlen. In tofu/.env tragt ihr die Zugangsdaten zu OpenNebula und die Passphrase für den State ein, die mindestens 16 Zeichen lang sein muss. Statt des Passworts für OpenNebula nehmt ihr besser einen [Login-Token](https://docs.opennebula.io/7.4/product/cloud_system_administration/multitenancy/manage_users/) mit Ablaufzeit und auf eure Gruppe beschränkt, erzeugt mit `oneuser token-create --time <sekunden> --group <gruppe>`. Er lässt sich jederzeit mit `oneuser token-delete` widerrufen. In tofu/terraform.tfvars stehen die Namen der Debian-Vorlage und des Netzes, die keine Geheimnisse sind. Das Passwort für den Ansible Vault legt ihr als Datei ansible/.vault_pass ab.
 
 Die Rezepte laden tofu/.env über [env.sh](../tofu/env.sh) und richten dabei die Verschlüsselung des State ein. Die Namen pbkdf2.main und aes_gcm.main in env.sh dürfen nach dem ersten Lauf nicht mehr geändert werden, sonst lässt sich der State nicht mehr lesen.
 
