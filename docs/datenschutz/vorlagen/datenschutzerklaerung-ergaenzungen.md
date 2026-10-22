@@ -5,14 +5,15 @@ Die Datenschutzerklärung im [Impressum der Webseite](https://makerspace-gt.de/i
 Anpassungen am bestehenden Text:
 
 - **Verantwortlicher.** Die Anschrift lautet nur noch Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh. Im Impressum und im Abschnitt Verantwortlicher anpassen
-- **Facebook Social Plugins.** Die Webseite bindet Instagram ein, nicht mehr Facebook. Den Abschnitt auf Instagram umschreiben, Anbieter bleibt die Meta Platforms Ireland Limited. Weil Meta beim Laden der Inhalte die IP-Adresse erhält und in der Regel Cookies setzt, laden die Inhalte erst nach einem Klick, mit Einwilligung nach Art. 6 Abs. 1 UAbs. 1 Buchst. a) DSGVO
+- **Facebook Social Plugins.** Die Webseite bindet keine Plugins von Facebook mehr ein. Den Abschnitt durch einen Abschnitt Instagram-Feed ersetzen. Das Plugin [Smash Balloon Instagram Feed](https://wordpress.org/plugins/instagram-feed/) holt die Beiträge auf unserem Server über die Instagram-API und liefert die Bilder von unserer Webseite aus. Beim Aufruf der Webseite erhält Meta deshalb keine Daten der Besucher. Erst wer einem Link zu Instagram oder YouTube folgt, ruft Seiten von Meta oder Google auf. Dafür gelten deren Datenschutzerklärungen
 - **Kommentare.** Der Abschnitt bleibt. Ergänzen, wie lange die IP-Adressen gespeichert werden. WordPress speichert sie ohne Plugin unbegrenzt, passend zu unseren Fristen löschen wir sie nach 7 Tagen oder speichern sie gar nicht
-- **Cookies, Zählpixel und Mobile Identifier.** Die Webseite setzt nur technisch nötige Cookies. Den Abschnitt darauf kürzen, solange Instagram erst nach Klick lädt
+- **Cookies, Zählpixel und Mobile Identifier.** Die Webseite setzt nur technisch nötige Cookies. Den Abschnitt darauf kürzen
 
 Vor der Veröffentlichung prüfen:
 
 - Sind die Verträge zur Auftragsverarbeitung mit 4830.org, Hetzner, sipgate und CrowdSec abgeschlossen? Bisher sind sie offen. Erst dann dürfen die Abschnitte das so nennen
 - Stimmen die Anschriften der Anbieter mit deren aktuellem Impressum überein?
+- Ist im Instagram-Feed unter Einstellungen, Erweitert die Option GDPR auf Ja gesetzt? Bisher steht nur favorLocal, dann lädt das Plugin Bilder, die es noch nicht lokal gespeichert hat, direkt von cdninstagram.com. Erst mit GDPR auf Ja kommen alle Bilder von unserer Webseite, siehe [GDPR Compliance](https://smashballoon.com/doc/instagram-feed-gdpr-compliance/)
 
 ---
 
