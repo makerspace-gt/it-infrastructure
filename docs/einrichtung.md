@@ -12,45 +12,44 @@ Diese Anleitung führt durch die ersten Schritte mit OpenTofu und Ansible. Am En
 
 ## 1 Devcontainer öffnen
 
-Das Repo in VS Code öffnen und im Devcontainer neu öffnen. Beim ersten Start installiert [post-create.sh](../.devcontainer/post-create.sh) OpenTofu, Ansible, ansible-lint und die benötigten Collections.
+Das Repo in VS Code öffnen und im Devcontainer neu öffnen. Beim ersten Start installiert [post-create.sh](../.devcontainer/post-create.sh) OpenTofu, just, Ansible, ansible-lint und die benötigten Collections. Alle Befehle stehen als Rezepte im [Justfile](../Justfile). Eine Übersicht zeigt:
+
+```bash
+just
+```
 
 ## 2 Geheimnisse setzen
 
-Zugangsdaten gehören nie ins Repo. Sie liegen in Vaultwarden und lokal in einer Datei tofu/.env, die in der .gitignore steht. Die Vorlage dafür ist [.env.example](../tofu/.env.example).
+Zugangsdaten gehören nie ins Repo. Sie liegen in Vaultwarden und lokal in Dateien, die in der .gitignore stehen.
 
 ```bash
-cd tofu
-cp .env.example .env
+just setup
 ```
 
-In tofu/.env tragt ihr die Zugangsdaten zu OpenNebula und die Passphrase für den State ein. Die Passphrase muss mindestens 16 Zeichen lang sein. Vor jeder Arbeit mit OpenTofu lädt [env.sh](../tofu/env.sh) die Datei und richtet die Verschlüsselung des State ein.
+Das legt tofu/.env und tofu/terraform.tfvars aus den Vorlagen an, falls sie fehlen. In tofu/.env tragt ihr die Zugangsdaten zu OpenNebula und die Passphrase für den State ein, die mindestens 16 Zeichen lang sein muss. In tofu/terraform.tfvars stehen die Namen der Debian-Vorlage und des Netzes, die keine Geheimnisse sind. Das Passwort für den Ansible Vault legt ihr als Datei ansible/.vault_pass ab.
 
-```bash
-source env.sh
-```
-
-Die Namen pbkdf2.main und aes_gcm.main in env.sh dürfen nach dem ersten Lauf nicht mehr geändert werden, sonst lässt sich der State nicht mehr lesen.
-
-Das Passwort für den Ansible Vault legt ihr als Datei ansible/.vault_pass ab. Sie steht ebenfalls in der .gitignore.
+Die Rezepte laden tofu/.env über [env.sh](../tofu/env.sh) und richten dabei die Verschlüsselung des State ein. Die Namen pbkdf2.main und aes_gcm.main in env.sh dürfen nach dem ersten Lauf nicht mehr geändert werden, sonst lässt sich der State nicht mehr lesen.
 
 ## 3 Test-VM anlegen
 
 ```bash
-cp terraform.tfvars.example terraform.tfvars
-tofu init
-tofu plan
-tofu apply
+just init
+just plan
+just apply
 ```
 
-[vms.tf](../tofu/vms.tf) enthält zunächst nur die VM test. Die SSH-Schlüssel der Admins holt OpenTofu von GitHub und übergibt sie über die Contextualization von OpenNebula an root. Nach dem Lauf steht die IP in der Ausgabe und das Inventar für Ansible in ansible/inventory/hosts.yml. Die Datei .terraform.lock.hcl wird committet.
+[vms.tf](../tofu/vms.tf) enthält zunächst nur die VM test. Die SSH-Schlüssel der Admins holt OpenTofu von GitHub und übergibt sie über die Contextualization von OpenNebula an root. `just apply` fragt vorher nach, prüft danach, dass der State verschlüsselt ist, und committet und pusht State, Lock-Datei und Inventar. Die IP-Adressen zeigt:
+
+```bash
+just ips
+```
 
 ## 4 Basisrolle ausrollen
 
 Der erste Lauf geht als root, weil es die Konten der Admins noch nicht gibt.
 
 ```bash
-cd ../ansible
-ansible-playbook site.yml -u root
+just bootstrap
 ```
 
 Danach prüft jeder Admin, dass er sich mit dem eigenen Konto anmelden und sudo nutzen kann.
@@ -60,44 +59,37 @@ ssh <benutzer>@<ip>
 sudo -v
 ```
 
-Erst wenn das für alle klappt, wird in group_vars `base_disable_root_login: true` gesetzt und die Basisrolle noch einmal mit dem eigenen Konto ausgerollt.
+Erst wenn das für alle klappt, wird in group_vars `base_disable_root_login: true` gesetzt und die Basisrolle noch einmal mit dem eigenen Konto ausgerollt. Ein Probelauf zeigt vorher die Änderungen.
 
 ```bash
-ansible-playbook site.yml -u <benutzer>
+just check <benutzer>
+just deploy <benutzer>
 ```
+
+Mit einem zweiten Argument lässt sich der Lauf auf einen Host oder eine Gruppe begrenzen, zum Beispiel `just deploy igami test`.
 
 ## 5 State synchronisieren
 
-Der State von OpenTofu liegt verschlüsselt als tofu/terraform.tfstate im Repo. Weil versions.tf unverschlüsselte States verweigert, kann ohne TF_ENCRYPTION kein Klartext entstehen. Eine Sperre gegen gleichzeitige Änderungen gibt es dabei nicht. Deshalb gilt:
+Der State von OpenTofu liegt verschlüsselt als tofu/terraform.tfstate im Repo. Weil versions.tf unverschlüsselte States verweigert, kann ohne die Passphrase kein Klartext entstehen. Eine Sperre gegen gleichzeitige Änderungen gibt es dabei nicht. Deshalb gilt:
 
-1. Vor jedem `tofu plan` oder `tofu apply` den neuesten Stand holen.
-2. Im Admin-Chat Bescheid geben, dass man gerade OpenTofu ausführt.
-3. Direkt nach `tofu apply` den State zusammen mit den Änderungen an den .tf-Dateien und dem Inventar committen und pushen.
+1. Vor `just apply` im Admin-Chat Bescheid geben, dass man gerade OpenTofu ausführt.
+2. Änderungen an den .tf-Dateien vorher committen.
+3. `just plan` und `just apply` holen vorher den neuesten Stand, `just apply` pusht den State direkt danach.
+
+Ob der State verschlüsselt ist, prüft auch einzeln:
 
 ```bash
-git pull
-cd tofu
-tofu apply
-git add terraform.tfstate .terraform.lock.hcl ../ansible/inventory/hosts.yml *.tf
-git commit -m "apply tofu"
-git push
+just state-check
 ```
 
-Vor dem Commit lässt sich prüfen, dass der State wirklich verschlüsselt ist. Ein verschlüsselter State enthält den Schlüssel encrypted_data.
+Kommt es doch zu einem Konflikt im State, wird er nicht von Hand zusammengeführt. Stattdessen nimmt man den Stand vom Server und führt `just apply` erneut aus.
+
+## 6 Prüfen und aufräumen
+
+Vor jedem Commit prüft `just lint` die Formatierung und die Konfiguration von OpenTofu und Ansible, `just fmt` formatiert die .tf-Dateien. Die Test-VM wieder löschen, wenn alles funktioniert:
 
 ```bash
-grep -q encrypted_data terraform.tfstate && echo verschlüsselt
-```
-
-Kommt es doch zu einem Konflikt im State, wird er nicht von Hand zusammengeführt. Stattdessen nimmt man den Stand vom Server und führt `tofu apply` erneut aus.
-
-## 6 Aufräumen
-
-Die Test-VM wieder löschen, wenn alles funktioniert.
-
-```bash
-cd ../tofu
-tofu destroy
+just destroy
 ```
 
 ## Offene Punkte
