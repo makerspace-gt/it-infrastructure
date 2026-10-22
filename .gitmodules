@@ -50,3 +50,7 @@
 	path = upstream/forgejo
 	url = https://codeberg.org/forgejo/forgejo.git
 	shallow = true
+[submodule "upstream/immich"]
+	path = upstream/immich
+	url = https://github.com/immich-app/immich.git
+	shallow = true
