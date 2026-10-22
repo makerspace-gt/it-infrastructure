@@ -174,6 +174,25 @@ Der Neuaufbau soll für Engagierte einfacher werden, nicht nur für Admins. Zwei
 - **Kurze Tests vor dem Umstellen.** Bevor ein Dienst umzieht, probieren zwei oder drei Engagierte ohne IT-Hintergrund typische Aufgaben aus, zum Beispiel ein Ticket beim Repair Café anlegen oder ein Dokument in Nextcloud finden.
 - **Auch auf dem Smartphone.** Beim Repair Café arbeiten Engagierte oft mit Tablet oder Smartphone, deshalb testen wir auch dort.
 
+## Vorgehen pro Dienst
+
+Jeder Dienst wird in drei Schritten aufgesetzt. Erst wenn ein Schritt vollständig erfüllt ist, beginnt der nächste. So ist die Wiederherstellung zweimal geprüft, bevor echte Daten davon abhängen, und der Umzug der produktiven Daten ist nichts anderes als eine bereits erprobte Wiederherstellung.
+
+| Schritt | Ziel | Fertig, wenn |
+|---|---|---|
+| 1 Läuft mit Backup | Der Dienst läuft auf der neuen VM und wird gesichert | Die Rolle richtet den Dienst ohne Handarbeit ein. Er ist über NetBird erreichbar, bei Bedarf mit Anmeldung über authentik. Uptime Kuma und Beszel überwachen ihn. Das Backup per resticker läuft und meldet seinen Erfolg an Uptime Kuma |
+| 2 Läuft mit Restore | Die Wiederherstellung ist erprobt | Die Daten des Dienstes werden gelöscht oder eine frische VM angelegt. Die Aufgabe zur Wiederherstellung der Rolle stellt alles aus dem Backup von Schritt 1 wieder her. Testdaten sind danach vollständig vorhanden. Die Schritte und die benötigte Zeit stehen in der Anleitung des Dienstes |
+| 3 Produktiv aus Restore | Der Dienst geht mit echten Daten in Betrieb | Die produktiven Daten werden genau auf dem Weg aus Schritt 2 wiederhergestellt, bei bestehenden Diensten aus dem Backup des alten Systems, bei neuen Diensten aus dem Backup der geprüften Einrichtung. Engagierte prüfen typische Aufgaben, danach wird der DNS-Eintrag umgestellt und das alte System bleibt bis zur Freigabe stehen |
+
+Jede Rolle bringt dafür dieselben Bausteine mit:
+
+- **Einrichtung.** Die Aufgaben in tasks/main.yml richten den Dienst vollständig ein.
+- **Backup.** Ein resticker-Container sichert die Daten, bei Datenbanken vorher als Dump, und meldet sich bei Uptime Kuma.
+- **Restore.** Die Aufgaben in tasks/restore.yml stellen den Dienst aus einem gewählten Snapshot wieder her. Sie laufen nur mit dem Tag restore, also nie aus Versehen. Die alten Rollen für Zammad, Vaultwarden und Discourse in docker-compose-server dienen als Vorlage.
+- **Anleitung.** Eine Datei docs/dienste/<dienst>.md beschreibt Zweck, Zugang, Backup und Wiederherstellung.
+
+Für Schritt 3 bei bestehenden Diensten brauchen wir lesenden Zugriff auf die alten Backups, also das alte restic-Passwort und die alte rclone-Konfiguration aus dem Vault von docker-compose-server. Sie kommen nur für den Umzug in den neuen Vault und werden danach entfernt.
+
 ## Stufen
 
 Für [MANUEL](https://github.com/makerspace-gt/MANUEL/blob/main/PLAN.md) muss bis zum 31.12.2026 nur ein Teil stehen, der Rest folgt danach. Die Aufwände sind Schätzungen für ehrenamtliche Arbeit.
@@ -202,33 +221,52 @@ Die alten VMs laufen weiter, bis der jeweilige Dienst auf der neuen VM geprüft 
 
 ## Stufe 1 Zugangs-VM
 
-- [ ] Zugangs-VM mit öffentlicher IP anlegen, später per OpenTofu, und DNS-Eintrag setzen
+Vorbereitung:
+
+- [ ] Zugangs-VM mit öffentlicher IP per OpenTofu anlegen und DNS-Eintrag setzen
 - [ ] Grundsystem per Ansible einrichten
-- [ ] authentik einrichten, nach der [Installationsanleitung](https://github.com/goauthentik/authentik/blob/main/website/docs/install-config/install/docker-compose.mdx) mit PostgreSQL, Server und Worker
-- [ ] Vaultwarden auf die Zugangs-VM umziehen, ohne Anmeldung über authentik, damit es auch bei einem Ausfall von authentik erreichbar bleibt
-- [ ] Rolle netbird mit Management, Signal, Relay und Dashboard anlegen, Traefik übernimmt TLS. Als Vorlage dienen [getting-started.sh](https://github.com/netbirdio/netbird/blob/main/infrastructure_files/getting-started.sh) und die Compose-Vorlage für Traefik in upstream/netbird
+- [ ] Rollen traefik und resticker schreiben, Traefik mit DNS-Challenge über lima-city und den API-Schlüssel im Ansible Vault
 - [ ] Firewall für HTTPS und die UDP-Ports von STUN und Relay öffnen
-- [ ] Anmeldung für das Dashboard [an authentik anbinden](https://docs.netbird.io/selfhosted/identity-providers/authentik)
-- [ ] Datenbank des Management-Servers per resticker sichern, weil ohne sie alle Peers und Regeln neu angelegt werden müssen
-- [ ] Monitor in Uptime Kuma anlegen, weil ohne Management und Relay keine neuen Verbindungen zustande kommen
-- [ ] Client auf der Helpdesk-VM installieren und testen, dass die Zammad-Container das NetBird-Netz über den Host erreichen
-- [ ] Traefik auf DNS-Challenge mit lima-city umstellen und den API-Schlüssel im Ansible Vault ablegen
+- [ ] Gestaltungsvorlage mit Logo, Favicon, Farben und Schrift unter branding/ anlegen
+- [ ] Fehlerseite in Traefik für Zugriffe ohne NetBird einrichten
+
+authentik nach der [Installationsanleitung](https://github.com/goauthentik/authentik/blob/main/website/docs/install-config/install/docker-compose.mdx) mit PostgreSQL, Server und Worker:
+
+- [ ] Schritt 1 Läuft mit Backup, inklusive Startseite mit allen Diensten und angepasster Gestaltung
+- [ ] Schritt 2 Läuft mit Restore
+- [ ] Schritt 3 Produktiv aus Restore der geprüften Einrichtung
+
+NetBird mit Management, Signal, Relay und Dashboard. Als Vorlage dienen [getting-started.sh](https://github.com/netbirdio/netbird/blob/main/infrastructure_files/getting-started.sh) und die Compose-Vorlage für Traefik in upstream/netbird:
+
+- [ ] Schritt 1 Läuft mit Backup, inklusive [Anmeldung über authentik](https://docs.netbird.io/selfhosted/identity-providers/authentik) und Monitor in Uptime Kuma, weil ohne Management und Relay keine neuen Verbindungen zustande kommen
+- [ ] Schritt 2 Läuft mit Restore, weil ohne die Datenbank des Management-Servers alle Peers und Regeln neu angelegt werden müssen
+- [ ] Schritt 3 Produktiv aus Restore der geprüften Einrichtung
+- [ ] Anleitung für Engagierte zum Einrichten des NetBird-Clients schreiben
+
+Vaultwarden, ohne Anmeldung über authentik, damit es auch bei einem Ausfall von authentik erreichbar bleibt:
+
+- [ ] Schritt 1 Läuft mit Backup
+- [ ] Schritt 2 Läuft mit Restore
+- [ ] Schritt 3 Produktiv aus Restore des Backups vom alten Vaultwarden
+
+Danach:
+
 - [ ] Festlegen, welche Teile von Zammad, Discourse und Nextcloud für Gäste öffentlich bleiben
 - [ ] Weboberflächen Dienst für Dienst nur noch über NetBird erreichbar machen und Zugriffsregeln nach Gruppen aus authentik anlegen
-- [ ] Anleitung für Engagierte zum Einrichten des NetBird-Clients schreiben
-- [ ] Gestaltungsvorlage mit Logo, Favicon, Farben und Schrift unter branding/ anlegen
-- [ ] Startseite in authentik mit allen Diensten einrichten und Gestaltung von authentik anpassen
-- [ ] Fehlerseite in Traefik für Zugriffe ohne NetBird einrichten
 
 ## Stufe 1 Helpdesk-VM
 
-- [ ] Helpdesk-VM anlegen und Grundsystem per Ansible einrichten
-- [ ] Zammad in einer Version aufsetzen, die Ollama-Anbieter, Ticket Categorizer, Ticket Text Extractor und Embeddings für die Wissensdatenbank bietet
-- [ ] Tickets per resticker aus dem bisherigen Zammad übernehmen und dabei Wartezeiten in das neue Datumsfeld Termin überführen
-- [ ] Die angepasste ticket.rb nicht übernehmen
-- [ ] Gestaltung von Zammad aus der Vorlage übernehmen und Zammad an authentik anbinden
-- [ ] Ansichten für das Repair Café testen, zusammen mit Engagierten und auch auf Tablet und Smartphone
-- [ ] NetBird-Client installieren, siehe oben
+Vorbereitung:
+
+- [ ] Helpdesk-VM per OpenTofu anlegen und Grundsystem per Ansible einrichten
+- [ ] NetBird-Client installieren und testen, dass die Zammad-Container das NetBird-Netz über den Host erreichen
+
+Zammad in einer Version mit Ollama-Anbieter, Ticket Categorizer, Ticket Text Extractor und Embeddings für die Wissensdatenbank, ohne die angepasste ticket.rb:
+
+- [ ] Schritt 1 Läuft mit Backup, inklusive Gestaltung aus der Vorlage und Anmeldung über authentik
+- [ ] Schritt 2 Läuft mit Restore
+- [ ] Schritt 3 Produktiv aus Restore des Backups vom alten Zammad, dabei Wartezeiten in das neue Datumsfeld Termin überführen
+- [ ] Ansichten für das Repair Café vor der Umstellung mit Engagierten testen, auch auf Tablet und Smartphone
 
 ## Upstream-Submodule
 
