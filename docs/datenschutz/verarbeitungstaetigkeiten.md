@@ -28,6 +28,7 @@ Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh, ver
 | 16 | Webseite | WordPress bei lima-city |
 | 17 | Telefonie | sipgate |
 | 18 | Öffentlichkeitsarbeit in sozialen Medien | Instagram, Mastodon, YouTube, Unternehmensprofil bei Google Maps |
+| 19 | Einweisungen an Maschinen | authentik, Nextcloud |
 
 ## Einzelheiten
 
@@ -207,3 +208,13 @@ Die Angaben stehen in der Datenschutzerklärung der Webseite.
 - **Empfänger:** Öffentlich, Meta und Google als gemeinsam Verantwortliche für die Statistiken bei Instagram und YouTube, Google für Google Maps, der Betreiber von social.tchncs.de und per Föderation andere Mastodon-Instanzen, siehe [Auftragsverarbeitung](auftragsverarbeitung.md#soziale-medien-und-google)
 - **Drittland:** USA
 - **Löschung:** Beiträge auf Wunsch abgebildeter Personen, Nachrichten nach Übernahme ins Ticket
+
+### 19 Einweisungen an Maschinen
+
+- **Zweck:** Sicherstellen, dass nur eingewiesene Personen gefährliche Maschinen nutzen, Nachweis für Haftung und Versicherung
+- **Betroffene:** Mitglieder und Engagierte
+- **Daten:** Name, Maschine, Datum der Einweisung, einweisende Person, unterschriebene Bestätigung
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO aus der Mitgliedschaft, lit. f für den Nachweis
+- **Empfänger:** Einweisende und Vorstand, Mitglieder sehen die Gruppen der Einweisungen, siehe [Berechtigungen](berechtigungen.md#maschinen-und-werkzeuge)
+- **Drittland:** Nein
+- **Löschung:** Gruppe mit dem Austritt, unterschriebene Bestätigung 3 Jahre nach dem Austritt

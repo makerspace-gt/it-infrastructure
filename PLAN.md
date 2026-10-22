@@ -153,7 +153,7 @@ Für den Überblick, welche Bibliotheken in welchem Dienst stecken und unter wel
 
 ## Datenschutz
 
-Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Öffentlich dokumentiert sind [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md), die [Verarbeitungstätigkeiten](docs/datenschutz/verarbeitungstaetigkeiten.md), die [Auftragsverarbeitung](docs/datenschutz/auftragsverarbeitung.md), die [technischen und organisatorischen Maßnahmen](docs/datenschutz/toms.md) und die [Abläufe](docs/datenschutz/ablaeufe.md) für Anfragen und Datenpannen. Vorlagen für den [Hinweis an Gäste](docs/datenschutz/vorlagen/hinweis-gaeste.md) und die [Verpflichtung auf Vertraulichkeit](docs/datenschutz/vorlagen/verpflichtung-vertraulichkeit.md) liegen daneben. Privat bleiben Namen und Kontakte der Verantwortlichen, die unterschriebenen Verträge im Gruppenordner des Vorstands in Nextcloud sowie Anfragen von Betroffenen und Datenpannen in einer eigenen Gruppe in Zammad. Die meisten Bausteine sind Dokumente, die beschreiben, was wir ohnehin tun. Das ist keine Rechtsberatung, im Zweifel holen wir uns Rat beim Landesdatenschutz oder bei einem Dachverband.
+Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Öffentlich dokumentiert sind [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md), die [Verarbeitungstätigkeiten](docs/datenschutz/verarbeitungstaetigkeiten.md), die [Auftragsverarbeitung](docs/datenschutz/auftragsverarbeitung.md), die [technischen und organisatorischen Maßnahmen](docs/datenschutz/toms.md), die [Berechtigungen](docs/datenschutz/berechtigungen.md) mit Gruppen und Einweisungen an Maschinen und die [Abläufe](docs/datenschutz/ablaeufe.md) für Anfragen und Datenpannen. Vorlagen für den [Hinweis an Gäste](docs/datenschutz/vorlagen/hinweis-gaeste.md) und die [Verpflichtung auf Vertraulichkeit](docs/datenschutz/vorlagen/verpflichtung-vertraulichkeit.md) liegen daneben. Privat bleiben Namen und Kontakte der Verantwortlichen, die unterschriebenen Verträge im Gruppenordner des Vorstands in Nextcloud sowie Anfragen von Betroffenen und Datenpannen in einer eigenen Gruppe in Zammad. Die meisten Bausteine sind Dokumente, die beschreiben, was wir ohnehin tun. Das ist keine Rechtsberatung, im Zweifel holen wir uns Rat beim Landesdatenschutz oder bei einem Dachverband.
 
 | Baustein | Inhalt |
 |---|---|
@@ -312,6 +312,7 @@ Vaultwarden unter vault.makerspace-gt.de über den Proxy, damit auch Mitglieder 
 Danach:
 
 - [ ] Festlegen, welche Teile von Zammad, Discourse und Nextcloud für Gäste öffentlich bleiben
+- [ ] Gruppen nach den [Berechtigungen](docs/datenschutz/berechtigungen.md) in authentik anlegen, auch die Gruppen für Einweisungen an Maschinen
 - [ ] Dienste nach der Tabelle im Abschnitt Erreichbarkeit über den Proxy oder nur per VPN erreichbar machen und Zugriffsregeln nach Gruppen aus authentik anlegen
 
 ## Stufe 1 Helpdesk-VM
