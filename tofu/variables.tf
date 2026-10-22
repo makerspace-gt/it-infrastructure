@@ -5,9 +5,10 @@ variable "template_name" {
 }
 
 variable "locations" {
-  description = "Hosts that belong together and the network they share. VMs refer to a location by its key."
+  description = "A cluster or a set of hosts and the network they share. VMs refer to a location by its key."
   type = map(object({
-    hosts   = list(string)
+    cluster = optional(string)
+    hosts   = optional(list(string), [])
     network = string
   }))
 }

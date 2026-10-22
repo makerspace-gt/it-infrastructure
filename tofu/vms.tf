@@ -13,10 +13,22 @@ locals {
   }
 
   vm_locations = { for name, vm in local.vms : name => var.locations[coalesce(vm.location, var.default_location)] }
+
+  vm_sched_requirements = {
+    for name, location in local.vm_locations : name => join(" & ", compact([
+      location.cluster == null ? "" : "CLUSTER_ID = ${data.opennebula_cluster.cluster[location.cluster].id}",
+      length(location.hosts) == 0 ? "" : "(${join(" | ", [for host in location.hosts : "HOSTNAME = \"${host}\""])})",
+    ]))
+  }
 }
 
 data "opennebula_template" "debian" {
   name = var.template_name
+}
+
+data "opennebula_cluster" "cluster" {
+  for_each = toset(compact([for location in values(local.vm_locations) : location.cluster]))
+  name     = each.key
 }
 
 data "opennebula_virtual_network" "network" {
@@ -33,8 +45,8 @@ resource "opennebula_virtual_machine" "vm" {
   vcpu        = each.value.vcpu
   memory      = each.value.memory
 
-  # Only the hosts of the location are allowed
-  sched_requirements = join(" | ", [for host in local.vm_locations[each.key].hosts : "HOSTNAME = \"${host}\""])
+  # Only the cluster and, if given, the hosts of the location are allowed
+  sched_requirements = local.vm_sched_requirements[each.key] == "" ? null : local.vm_sched_requirements[each.key]
 
   context = {
     NETWORK        = "YES"
