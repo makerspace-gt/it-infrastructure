@@ -1,7 +1,8 @@
 # One entry per VM. The groups become Ansible inventory groups.
-# network is optional and defaults to var.network_name.
-# sched_requirements is optional and pins the VM to hosts or clusters,
-# for example "CLUSTER_ID = 100" or "HOSTNAME = \"host1\"".
+# Every VM sets all fields so that OpenTofu sees a uniform map.
+# network = null uses var.network_name.
+# sched_requirements = null lets OpenNebula choose the host, otherwise it pins
+# the VM, for example "CLUSTER_ID = 100" or "HOSTNAME = \"host1\"".
 locals {
   vms = {
     test = {
@@ -9,10 +10,13 @@ locals {
       vcpu   = 2
       memory = 2048
       groups = ["test"]
+
+      network            = null
+      sched_requirements = null
     }
   }
 
-  vm_networks = { for name, vm in local.vms : name => try(vm.network, var.network_name) }
+  vm_networks = { for name, vm in local.vms : name => coalesce(vm.network, var.network_name) }
 }
 
 data "opennebula_template" "debian" {
@@ -32,7 +36,7 @@ resource "opennebula_virtual_machine" "vm" {
   cpu                = each.value.cpu
   vcpu               = each.value.vcpu
   memory             = each.value.memory
-  sched_requirements = try(each.value.sched_requirements, null)
+  sched_requirements = each.value.sched_requirements
 
   context = {
     NETWORK        = "YES"
