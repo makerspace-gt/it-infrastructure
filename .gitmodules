@@ -26,3 +26,7 @@
 	path = upstream/discourse
 	url = https://github.com/discourse/discourse.git
 	shallow = true
+[submodule "upstream/vikunja"]
+	path = upstream/vikunja
+	url = https://github.com/go-vikunja/vikunja.git
+	shallow = true
