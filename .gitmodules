@@ -1,0 +1,4 @@
+[submodule "upstream/zammad"]
+	path = upstream/zammad
+	url = https://github.com/zammad/zammad.git
+	shallow = true
