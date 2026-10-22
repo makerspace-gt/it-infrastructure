@@ -47,12 +47,13 @@ Bei Veranstaltungen fotografieren wir für unsere Öffentlichkeitsarbeit. Fotos 
 
 ## Auftritte in sozialen Medien
 
-Wir betreiben ein Profil bei Instagram, einen Kanal bei YouTube und einen Eintrag im Unternehmensprofil bei Google Maps.
+Wir betreiben ein Profil bei Instagram, ein Profil bei Mastodon, einen Kanal bei YouTube und einen Eintrag im Unternehmensprofil bei Google Maps.
 
 - **Instagram.** Anbieter ist die Meta Platforms Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland. Für die Statistiken über Besucher unseres Profils sind wir mit Meta gemeinsam verantwortlich nach Art. 26 DSGVO. Das Wesentliche der Vereinbarung stellt Meta unter https://www.facebook.com/legal/terms/page_controller_addendum bereit. Für alle übrigen Verarbeitungen ist Meta allein verantwortlich.
 - **YouTube und Google Maps.** Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Für die Verarbeitung auf diesen Plattformen ist Google verantwortlich.
+- **Mastodon.** Unser Profil liegt auf der Instanz social.tchncs.de, die Milan Ihl in Deutschland betreibt. Für die Verarbeitung auf der Instanz ist der Betreiber verantwortlich, seine Datenschutzerklärung steht unter https://social.tchncs.de/privacy-policy. Mastodon ist Teil eines föderierten Netzwerks. Wer unserem Profil folgt oder auf Beiträge antwortet, dessen öffentliche Angaben gelangen an andere Instanzen, die sie in eigener Verantwortung speichern.
 
-Rechtsgrundlage für unsere Auftritte ist Art. 6 Abs. 1 UAbs. 1 Buchst. f) DSGVO, unser berechtigtes Interesse ist die Information über den Verein. Eine Übermittlung in die USA ist bei diesen Anbietern möglich, sie erfolgt auf Grundlage des Angemessenheitsbeschlusses zum EU-US Data Privacy Framework.
+Rechtsgrundlage für unsere Auftritte ist Art. 6 Abs. 1 UAbs. 1 Buchst. f) DSGVO, unser berechtigtes Interesse ist die Information über den Verein. Eine Übermittlung in die USA ist bei Meta und Google möglich, sie erfolgt auf Grundlage des Angemessenheitsbeschlusses zum EU-US Data Privacy Framework.
 
 ## Messenger und Telefon
 
