@@ -18,3 +18,7 @@
 	path = upstream/signal-cli
 	url = https://github.com/AsamK/signal-cli.git
 	shallow = true
+[submodule "upstream/signal-cli-rest-api"]
+	path = upstream/signal-cli-rest-api
+	url = https://github.com/bbernhard/signal-cli-rest-api.git
+	shallow = true
