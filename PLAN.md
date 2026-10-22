@@ -4,7 +4,8 @@ Dieser Plan beschreibt den Neuaufbau der IT des Makerspace Gütersloh. Er ist au
 
 ## Grundsätze
 
-- **Weboberflächen nur über NetBird.** Alle Weboberflächen sind am Ende nur über NetBird erreichbar. SSH mit Schlüssel bleibt direkt möglich und ist damit auch der Notzugang, falls NetBird ausfällt. Ausnahmen stehen im Abschnitt zur Erreichbarkeit.
+- **Öffentlich nur über den NetBird-Proxy, Kritisches nur per VPN.** Dienste für Mitglieder und Gäste sind über den Reverse Proxy von NetBird erreichbar, bei Bedarf mit Anmeldung über authentik. Kritische Dienste sind nur per VPN erreichbar. SSH mit Schlüssel bleibt direkt möglich und ist damit auch der Notzugang. Details stehen im Abschnitt zur Erreichbarkeit.
+- **Auf den VMs nur Docker und der NetBird-Client.** Kein Dienst auf einer VM ist direkt aus dem Internet erreichbar, außer SSH. Alle Weboberflächen laufen über den Proxy auf der Zugangs-VM.
 - **Alles ist Code.** VMs, Hosts und Dienste entstehen aus diesem Repo. Geheimnisse liegen verschlüsselt im Ansible Vault.
 - **Sensible Dienste getrennt von Inhalten der Gäste.** Zugänge und Passwörter liegen nicht auf derselben VM wie Dienste, die E-Mails und Anhänge von außen verarbeiten.
 
@@ -12,7 +13,7 @@ Dieser Plan beschreibt den Neuaufbau der IT des Makerspace Gütersloh. Er ist au
 
 | Frage | Empfehlung | Alternative |
 |---|---|---|
-| Betrieb von NetBird | Management, Signal und Relay von NetBird auf der Zugangs-VM nach der [Anleitung zum Selbsthosten](https://docs.netbird.io/selfhosted/selfhosted-quickstart). Alle übrigen VMs und der Mini-PC bekommen nur den Client | NetBird Cloud im kostenlosen Tarif |
+| Betrieb von NetBird | Management, Signal, Relay und der [Reverse Proxy von NetBird](https://github.com/netbirdio/netbird/blob/main/proxy/README.md) auf der Zugangs-VM nach der [Anleitung zum Selbsthosten](https://docs.netbird.io/selfhosted/selfhosted-quickstart). Der Proxy ist der einzige öffentliche Einstieg für Weboberflächen. Alle übrigen VMs und der Mini-PC bekommen nur den Client | NetBird Cloud im kostenlosen Tarif |
 | Updates der Container | [Arcane](https://getarcane.app) statt watchtower auf allen Hosts. Ein zentraler Arcane-Server verwaltet die Docker-Hosts über Agenten, die sich [ausgehend verbinden](https://github.com/getarcaneapp/arcane/tree/main/docker/examples) und keine offenen Ports brauchen. Arcane erkennt neue Images, aktualisiert nach Zeitplan, meldet per Signal und kann sich an authentik anmelden. Es steht unter BSD-3-Clause. Der Arcane-Server steuert Docker auf allen Hosts und gehört deshalb auf eine gehärtete VM, erreichbar nur über NetBird. Die Compose-Dateien bleiben in Ansible, die GitOps-Funktion von Arcane nutzen wir nicht, damit nicht zwei Werkzeuge dieselben Dateien schreiben. Zammad aktualisieren wir nicht automatisch, sondern nach Hinweis von Arcane von Hand, weil Datenbankmigrationen und unsere Anpassungen geprüft werden müssen | watchtower wie bisher |
 | Überwachung der Ressourcen | [Beszel](https://beszel.dev) mit einem Hub neben Uptime Kuma auf der Monitoring-VM und einem Agenten auf jedem Host. Uptime Kuma meldet, ob Dienste erreichbar sind, Beszel meldet volle Platten, knappen Speicher, hohe Last, Temperaturen und SMART-Werte. Die Agenten können sich per WebSocket ausgehend mit dem Hub verbinden. Auf dem Mini-PC liest Beszel auch die [AMD-GPU](https://beszel.dev/guide/gpu) aus. Benachrichtigungen gehen über Shoutrrr, also auch per Signal, und die Anmeldung kann über [OAuth mit authentik](https://beszel.dev/guide/oauth) laufen. Beszel steht unter MIT | Nur Uptime Kuma wie bisher |
 | Zentrale Nutzerverwaltung | [authentik](https://github.com/goauthentik/authentik) liegt als Submodul unter upstream/. Es steht weitgehend unter MIT, ein Unternehmensteil unter eigener Lizenz. Laut [Doku zu Integrationen](https://docs.goauthentik.io/integrations/) lassen sich viele unserer Dienste per OpenID Connect oder SAML anbinden. Für MANUEL betrifft das vor allem NetBird, n8n, Open WebUI und Zammad. NetBird kann authentik [als Identity Provider nutzen](https://docs.netbird.io/selfhosted/identity-providers/authentik). NetBird richten wir gleich mit authentik ein statt mit dem eingebauten Dex | Jeder Dienst mit eigenen Konten |
@@ -22,21 +23,42 @@ Dieser Plan beschreibt den Neuaufbau der IT des Makerspace Gütersloh. Er ist au
 
 ## Erreichbarkeit
 
-Am Ende sind alle Weboberflächen nur über NetBird erreichbar. Das verkleinert die Angriffsfläche deutlich, weil Zammad, n8n, Arcane, Vaultwarden und die übrigen Dienste nicht mehr aus dem Internet ansprechbar sind. SSH mit Schlüssel bleibt direkt erreichbar.
+Dienste sind auf zwei Wegen erreichbar. Kein Dienst öffnet selbst Ports für das Web ins Internet, der öffentliche Verkehr läuft allein über den Proxy auf der Zugangs-VM.
 
-Einige Dienste müssen trotzdem öffentlich bleiben, weil sie vor oder außerhalb von NetBird gebraucht werden:
+- **Öffentlich über den NetBird-Proxy.** Der [Reverse Proxy von NetBird](https://github.com/netbirdio/netbird/blob/main/proxy/README.md) nimmt Anfragen aus dem Internet an und leitet sie über NetBird an die VM weiter, auf der der Dienst läuft. Pro Dienst lässt sich eine Anmeldung verlangen, bei uns per OIDC über authentik. Einzelne Pfade können ohne Anmeldung durchgereicht oder gesperrt werden, etwa das Webformular von Zammad. Die Zertifikate holt der Proxy selbst per ACME.
+- **Nur per VPN.** Kritische Dienste sind nur mit verbundenem NetBird-Client erreichbar. Ihr Name zeigt im öffentlichen DNS auf eine Anleitungsseite, die erklärt, wie man NetBird verbindet. Mit NetBird löst derselbe Name über eine [DNS-Zone von NetBird](https://github.com/netbirdio/netbird/blob/main/shared/management/http/api/openapi.yml) auf die interne Adresse auf. So gilt für jeden Dienst nur eine Adresse. Die Zone wird nur an berechtigte Gruppen verteilt, die Gruppen kommen aus authentik.
 
-- **NetBird selbst.** Management, Signal und Relay müssen erreichbar sein, damit sich Clients überhaupt verbinden können.
-- **authentik.** Die Anmeldung bei NetBird läuft über authentik, bevor der Tunnel steht. Nur die Seiten für Anmeldung und OpenID Connect müssen öffentlich sein, die Verwaltung kann hinter NetBird.
-- **Was Gäste nutzen.** Gäste haben kein NetBird. Zu klären ist, ob wir ein Webformular von Zammad auf der Webseite, das Kundenportal oder eine öffentliche Wissensdatenbank mit Reparaturanleitungen anbieten. Das Forum auf Discourse und der Kalender aus Nextcloud, der auf der Webseite erscheint, sind ebenfalls öffentlich. Für diese Teile veröffentlichen wir nur die nötigen Pfade.
+Vorschlag für die Zuordnung:
 
-Damit das funktioniert, braucht es drei Änderungen:
+| Dienst | Adresse | Erreichbarkeit | Anmeldung |
+|---|---|---|---|
+| authentik | auth | Öffentlich direkt, weil die Anmeldung vor dem Tunnel stattfindet. Die Verwaltung nur per VPN | |
+| NetBird Management, Signal, Relay, Proxy | netbird | Öffentlich direkt | authentik |
+| Zammad | helpdesk | Proxy | authentik für Engagierte, Webformular und Wissensdatenbank ohne Anmeldung |
+| Open WebUI | | Proxy | authentik |
+| Nextcloud | cloud | Proxy | authentik, öffentliche Freigaben und Kalender ohne Anmeldung |
+| Discourse | forum | Proxy | Lesen öffentlich, Anmeldung über authentik |
+| Immich | fotos | Proxy | authentik |
+| Vikunja | | Proxy | authentik |
+| Vaultwarden | vault | Proxy ohne Anmeldung am Proxy, weil die Apps von Bitwarden keine Anmeldung per OIDC vor dem Dienst können. Die Verwaltung unter /admin sperrt der Proxy | Anmeldung über authentik und zusätzlich lokal, laut [Konfiguration](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template) mit `SSO_ENABLED=true` und `SSO_ONLY=false`. Neue Konten nur per Einladung, Zwei-Faktor-Anmeldung für lokale Anmeldung als Pflicht |
+| Forgejo | git | Proxy ohne Anmeldung am Proxy, damit öffentliche Repos lesbar bleiben und Git über HTTPS funktioniert | Anmeldung in Forgejo über authentik |
+| Uptime Kuma | status | Proxy, die Statusseite ohne Anmeldung, die Verwaltung mit authentik | authentik |
+| n8n, Arcane, Dependency-Track, Beszel | | Nur per VPN | authentik, wo möglich |
+| LanguageTool | | Nur per VPN, weil die Browser-Erweiterung keine Anmeldung per OIDC kann | |
+| Ollama | | Nur per VPN für die Helpdesk-VM und Open WebUI | |
+| SSH | | Direkt mit Schlüssel | |
 
-- **Zertifikate per DNS-Challenge.** Traefik holt Zertifikate bisher über HTTP und braucht dafür öffentliche Erreichbarkeit. Mit der [DNS-Challenge](https://doc.traefik.io/traefik/https/acme/) geht das auch für interne Dienste. Unser DNS-Anbieter lima-city wird vom zugrunde liegenden ACME-Werkzeug lego [unterstützt](https://go-acme.github.io/lego/dns/limacity/). Dafür brauchen wir einen API-Schlüssel von lima-city im Ansible Vault.
-- **Namen auflösen.** Die Namen der Dienste zeigen auf die NetBird-Adressen der Hosts. Das geht über die [DNS-Verwaltung von NetBird](https://docs.netbird.io/manage/dns) oder über öffentliche Einträge mit den NetBird-Adressen.
-- **Zugriff nach Gruppen.** Die [Zugriffsregeln von NetBird](https://docs.netbird.io/manage/access-control) legen fest, welche Gruppe welchen Dienst erreicht, zum Beispiel Admins alles und Engagierte des Repair Cafés nur Zammad und Open WebUI. Die Gruppen kommen aus authentik.
+Dafür braucht es:
 
-Engagierte brauchen dafür den NetBird-Client auf ihrem Gerät. Für das Repair Café in der Stadtbibliothek planen wir deshalb eine kurze Anleitung und Zeit zum Einrichten ein. Für einen Ausfall von NetBird bleibt der Weg über SSH mit Portweiterleitung, damit Admins weiter an Vaultwarden und die übrigen Dienste kommen.
+- **Den Proxy auf der Zugangs-VM.** Er meldet sich laut README per Machine-to-Machine-OAuth beim Management-Server an. Dafür bekommt er in authentik einen eigenen Client.
+- **Auf den VMs nur der NetBird-Client.** Die Dienste auf den VMs binden ihre Ports nur an die NetBird-Adresse der VM. Der Proxy erreicht sie über den Tunnel, der den Verkehr ohnehin verschlüsselt. Weiterleitung, Anmeldung und Zertifikate für alle Weboberflächen übernimmt der Proxy, öffentliche wie private. Ein eigenes Traefik braucht keine VM außer der Zugangs-VM. Weil Docker die Firewall des Hosts umgeht, binden die Compose-Stacks Ports ausdrücklich an die NetBird-Adresse, und NetBird startet vor Docker.
+- **Zugriff nach Gruppen.** Die [Zugriffsregeln von NetBird](https://docs.netbird.io/manage/access-control) legen fest, welche Gruppe welchen Dienst per VPN erreicht. Admins erreichen alles, Engagierte nur, was sie brauchen.
+- **Traefik und CrowdSec als Teil von NetBird.** Die Installation von NetBird bringt Traefik mit und kann CrowdSec zur Prüfung der IP-Adressen zuschalten. Beide laufen auf der Zugangs-VM vor dem Proxy.
+- **Private Dienste im Proxy.** Der Proxy kennt Dienste, die nur für NetBird-Teilnehmer erreichbar sind. Darüber laufen die Dienste, die nur per VPN erreichbar sein sollen. Das prüfen wir in Schritt 1 von NetBird.
+
+Für einen Ausfall von NetBird bleibt der Weg über SSH mit Portweiterleitung, damit Admins weiter an Vaultwarden und die übrigen Dienste kommen.
+
+Der Reverse Proxy ist ein noch junger Teil von NetBird. In Schritt 1 und 2 für NetBird prüfen wir, ob er mit authentik und unseren Diensten zuverlässig funktioniert, auch für private Dienste. Falls nicht, bekommen die VMs doch ein eigenes Traefik mit Zertifikaten per [DNS-Challenge](https://doc.traefik.io/traefik/https/acme/) über lima-city, das lego [unterstützt](https://go-acme.github.io/lego/dns/limacity/).
 
 ## Angepasste ticket.rb
 
@@ -65,11 +87,11 @@ end
 
 ## Aufteilung und Größe der VMs
 
-Die Aufteilung folgt drei Regeln. Sensible Dienste liegen getrennt von Inhalten der Gäste, was zusammen ausfällt, darf zusammen liegen, und Abhängigkeiten zeigen nur von Fachanwendungen zu Zugang und Monitoring. Die Größen sind Schätzungen für den laufenden Betrieb, nicht die Summe aller Speichergrenzen. Pro VM rechnen wir etwa 1 GB für Betriebssystem, Docker, Traefik, CrowdSec, resticker und die Agenten von Arcane und Beszel ein.
+Die Aufteilung folgt drei Regeln. Sensible Dienste liegen getrennt von Inhalten der Gäste, was zusammen ausfällt, darf zusammen liegen, und Abhängigkeiten zeigen nur von Fachanwendungen zu Zugang und Monitoring. Die Größen sind Schätzungen für den laufenden Betrieb, nicht die Summe aller Speichergrenzen. Pro VM rechnen wir etwa 1 GB für Betriebssystem, Docker, NetBird-Client, resticker und die Agenten von Arcane und Beszel ein.
 
 | VM | Dienste | RAM | vCPU | Lokale Platte | Grundlage |
 |---|---|---|---|---|---|
-| Zugang, neu | authentik, NetBird, Vaultwarden | 4 GB | 2 | 30 GB | authentik braucht laut [Installationsanleitung](https://github.com/goauthentik/authentik/blob/main/website/docs/install-config/install/docker-compose.mdx) mindestens 2 GB, NetBird und Vaultwarden sind klein |
+| Zugang, neu | authentik, NetBird mit Proxy, Traefik und CrowdSec, Vaultwarden | 6 GB | 2 | 30 GB | authentik braucht laut [Installationsanleitung](https://github.com/goauthentik/authentik/blob/main/website/docs/install-config/install/docker-compose.mdx) mindestens 2 GB. NetBird mit Proxy, Traefik und CrowdSec ist der einzige öffentliche Einstieg und bekommt Reserve |
 | Verwaltung, neu | Forgejo, Runner, Arcane-Server, Dependency-Track | 10 GB | 4 | 80 GB | Der Runner braucht Platz für Jobs mit Ansible, OpenTofu, Docker und syft. Dependency-Track braucht empfohlen 8 GB, im Verbund reichen etwa 4 GB |
 | Helpdesk, neu | Zammad, n8n | 16 GB | 4 | 80 GB | Die [Zammad-Rolle](https://github.com/makerspace-gt/docker-compose-server/blob/main/roles/zammad/templates/.env.j2) erlaubt zusammen rund 13 GB, davon 4 GB für Elasticsearch. Dazu kommt n8n mit 1 bis 2 GB. Zammad speichert Anhänge in der Datenbank, und Elasticsearch hält künftig auch die Vektoren der semantischen Suche |
 | Kollaboration, neu | Nextcloud, Vikunja, LanguageTool | 6 GB | 3 | 40 GB | Die Dateien von Nextcloud liegen auf der Storagebox, lokal liegen nur Programme und Datenbanken. Wiki.js entfällt, dafür kommt LanguageTool dazu |
@@ -79,7 +101,7 @@ Die Aufteilung folgt drei Regeln. Sensible Dienste liegen getrennt von Inhalten 
 | Test, bei Bedarf | Testinstanz von Zammad | 8 GB | 2 | 40 GB | Nur bei Bedarf per OpenTofu anlegen und danach wieder löschen |
 | Mini-PC | Ollama, Open WebUI, optional Machine Learning für Immich | 64 GB | 12 Kerne | 1 TB | Sprachmodell mit 24 GB, Embedding-Modell, Varianten für den Benchmark |
 
-Zusammen brauchen die dauerhaften VMs etwa 48 GB Arbeitsspeicher und 21 vCPU, mit der Testinstanz 56 GB.
+Zusammen brauchen die dauerhaften VMs etwa 50 GB Arbeitsspeicher und 21 vCPU, mit der Testinstanz 58 GB.
 
 - **Immich kann den Mini-PC mitnutzen.** Immich trennt das Machine Learning für Gesichter und Suche vom Server und kann es [auf einem anderen Rechner](https://github.com/immich-app/immich/blob/main/docs/docs/guides/remote-machine-learning.md) laufen lassen. Mit ROCm nutzt es auch AMD-GPUs, das Image dafür braucht laut [Doku](https://github.com/immich-app/immich/blob/main/docs/docs/features/ml-hardware-acceleration.md) aber 35 GB Platz. Dann bleibt die Immich-VM schlanker, und die Fotos werden trotzdem ausgewertet.
 - **Die Storagebox ist ein Netzlaufwerk.** Für die Dateien von Nextcloud und die Originale von Immich ist das in Ordnung. Datenbanken und die Vorschaubilder von Immich gehören auf die lokale Platte. Die Vorschaubilder belegen erfahrungsgemäß einen Bruchteil der Originale, die genaue Größe hängt von der Bibliothek ab.
@@ -103,7 +125,7 @@ Langfristig soll die gesamte Infrastruktur aus Git entstehen, von der VM bis zum
 - **Der Zustand von OpenTofu enthält Geheimnisse.** Wir verschlüsseln ihn mit der eingebauten [Verschlüsselung des State](https://opentofu.org/docs/language/state/encryption/) und legen den Schlüssel im Ansible Vault ab.
 - **Ansible läuft bei jedem Commit.** Ein Runner von [Forgejo Actions](https://forgejo.org/docs/latest/user/actions/overview/) führt die Playbooks aus. Bei einem Pull Request laufen ansible-lint, `ansible-playbook --check --diff` und `tofu plan`. Nach dem Merge auf main laufen nur die Playbooks, deren Rollen sich geändert haben. `tofu apply` und das Playbook für Zammad starten wir von Hand, weil sie VMs löschen oder Datenbanken migrieren können. Bis Forgejo steht, geht dasselbe mit einem [eigenen Runner für GitHub Actions](https://docs.github.com/en/actions/hosting-your-own-runners).
 - **Der Runner läuft bei uns, nicht in der Cloud.** Er braucht den SSH-Schlüssel für alle Hosts, das Passwort für den Ansible Vault und den Zugang zu OpenNebula. Diese Geheimnisse gehören nicht zu einem fremden Anbieter. Der [selbst gehostete Runner](https://forgejo.org/docs/latest/admin/actions/runner-installation/) erreicht die Hosts über NetBird.
-- **Eigene Forgejo-Instanz.** [Forgejo](https://codeberg.org/forgejo/forgejo) steht unter GPL-3.0 und ist nur über NetBird erreichbar. Die Anmeldung läuft über [authentik](https://docs.goauthentik.io/integrations/services/forgejo/). Öffentliche Repos wie MANUEL spiegeln wir per [Push-Mirror](https://forgejo.org/docs/latest/user/repo-mirror/) weiter nach GitHub oder Codeberg, damit andere Initiativen sie finden.
+- **Eigene Forgejo-Instanz.** [Forgejo](https://codeberg.org/forgejo/forgejo) steht unter GPL-3.0 und ist über den Proxy erreichbar, damit Mitglieder und andere Initiativen öffentliche Repos lesen können. Die Anmeldung läuft über [authentik](https://docs.goauthentik.io/integrations/services/forgejo/). Öffentliche Repos wie MANUEL spiegeln wir per [Push-Mirror](https://forgejo.org/docs/latest/user/repo-mirror/) weiter nach GitHub oder Codeberg, damit andere Initiativen sie finden.
 - **Eine Verwaltungs-VM für Forgejo, Runner und Arcane-Server.** Alle drei steuern die übrigen Hosts. Sie liegen getrennt von der Zugangs-VM mit authentik, NetBird und Vaultwarden, weil der Runner fremden Code aus Repos ausführt.
 - **Henne und Ei.** Die Verwaltungs-VM und Forgejo richten wir einmalig von einem Admin-Rechner aus mit OpenTofu und Ansible ein. Danach übernimmt die CI alle übrigen Hosts. Änderungen an der Verwaltungs-VM selbst laufen weiter von Hand.
 
@@ -131,7 +153,7 @@ Für den Überblick, welche Bibliotheken in welchem Dienst stecken und unter wel
 
 ## Datenschutz
 
-Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Die meisten Bausteine sind Dokumente, die beschreiben, was wir ohnehin tun. Das ist keine Rechtsberatung, im Zweifel holen wir uns Rat beim Landesdatenschutz oder bei einem Dachverband.
+Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Welcher Dienst welche Daten wie lange speichert, steht in [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md). Die meisten Bausteine sind Dokumente, die beschreiben, was wir ohnehin tun. Das ist keine Rechtsberatung, im Zweifel holen wir uns Rat beim Landesdatenschutz oder bei einem Dachverband.
 
 | Baustein | Inhalt |
 |---|---|
@@ -140,7 +162,7 @@ Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Die meisten Baus
 | [Datenschutzhinweise](https://dsgvo-gesetz.de/art-13-dsgvo/) | Kurzer Hinweis für Gäste bei Anmeldung und Laufzettel, einschließlich der Unterstützung durch ein lokales Sprachmodell. Die Datenschutzerklärung der Webseite an die tatsächlichen Dienste anpassen |
 | Löschkonzept | Fristen für Gästedaten in Zammad, zum Beispiel Kontaktdaten einige Monate nach dem letzten Termin löschen und Reparaturdaten anonymisiert behalten. Zammad bringt dafür [Löschaufträge](https://admin-docs.zammad.org/en/latest/system/data-privacy.html) und [zeitgesteuerte Aktionen](https://admin-docs.zammad.org/en/latest/manage/scheduler.html) mit. Die Backups von resticker halten Daten bis zu zwölf Monate, das gehört ins Konzept |
 | [Auftragsverarbeitung](https://dsgvo-gesetz.de/art-28-dsgvo/) | Verträge mit dem Anbieter der VMs, mit lima-city und mit dem Anbieter der Storagebox. An reparatur-initiativen.org gehen ohne Alter und Geschlecht der Gäste keine personenbezogenen Daten |
-| [Technische und organisatorische Maßnahmen](https://dsgvo-gesetz.de/art-32-dsgvo/) | Aufschreiben, was es gibt oder geplant ist, also Weboberflächen nur über NetBird, verschlüsselte Backups, verschlüsselte SSD des Mini-PCs, Rechte nach Gruppen aus authentik und Zwei-Faktor-Anmeldung |
+| [Technische und organisatorische Maßnahmen](https://dsgvo-gesetz.de/art-32-dsgvo/) | Aufschreiben, was es gibt oder geplant ist, also öffentliche Dienste nur über den Proxy mit Anmeldung, kritische nur per VPN, verschlüsselte Backups, verschlüsselte SSD des Mini-PCs, Rechte nach Gruppen aus authentik und Zwei-Faktor-Anmeldung |
 | Betroffenenrechte | Festlegen, wer Anfragen auf [Auskunft](https://dsgvo-gesetz.de/art-15-dsgvo/) und [Löschung](https://dsgvo-gesetz.de/art-17-dsgvo/) bearbeitet. Die Löschaufträge von Zammad helfen dabei |
 | [Datenpannen](https://dsgvo-gesetz.de/art-33-dsgvo/) | Ablauf, wer eine Panne bewertet und sie binnen 72 Stunden meldet |
 | Vertraulichkeit | Alle Engagierten mit Zugriff auf Gästedaten unterschreiben eine kurze Verpflichtung auf Vertraulichkeit |
@@ -157,9 +179,9 @@ Der Neuaufbau soll für Engagierte einfacher werden, nicht nur für Admins. Zwei
 
 - **Eine Startseite für alles.** Das [Anwendungs-Dashboard von authentik](https://docs.goauthentik.io/add-secure-apps/applications/manage_apps/) zeigt jedem Mitglied genau die Dienste, für die es freigeschaltet ist, mit Logo und Link. Es ist die Startseite für alle Engagierten.
 - **Einmal anmelden.** Dank Single Sign-on über authentik wechselt man ohne neue Anmeldung von Zammad zu Nextcloud oder Discourse. Ausnahmen sind Vaultwarden, das bewusst eigenständig bleibt, und n8n, das OIDC nur in der Enterprise-Version anbietet.
-- **Sprechende Adressen.** Ein einheitliches Schema wie helpdesk, cloud, forum, fotos und passwort unter makerspace-gt.de macht Adressen leicht merkbar.
+- **Sprechende Adressen.** Ein einheitliches Schema unter makerspace-gt.de macht Adressen leicht merkbar, zum Beispiel auth für authentik, netbird, vault für Vaultwarden, helpdesk, cloud, forum und fotos.
 - **Zurück zur Startseite.** Wo ein Dienst eigene Links in Kopfzeile oder Menü erlaubt, verweist einer auf die Startseite.
-- **Verständliche Fehlerseite.** Wer ohne NetBird eine interne Adresse aufruft, sieht über die [Fehlerseiten von Traefik](https://doc.traefik.io/traefik/middlewares/http/errorpages/) einen Hinweis, NetBird zu verbinden, mit Link zur Anleitung statt eines technischen Fehlers.
+- **Anleitungsseite für VPN-Dienste.** Wer ohne NetBird einen Dienst aufruft, der nur per VPN erreichbar ist, landet auf einer Seite, die erklärt, wie man NetBird verbindet, mit Link zur Anleitung. Sie liegt öffentlich hinter dem Proxy und gehört zur Gestaltungsvorlage.
 - **NetBird ohne Hürde.** Der Client verbindet sich nach der [Installation](https://docs.netbird.io/get-started/install) automatisch beim Start. Die Anleitung für Engagierte zeigt die Einrichtung auf Laptop und Smartphone Schritt für Schritt.
 
 **Einheitlich aussehen**
@@ -173,6 +195,41 @@ Der Neuaufbau soll für Engagierte einfacher werden, nicht nur für Admins. Zwei
 
 - **Kurze Tests vor dem Umstellen.** Bevor ein Dienst umzieht, probieren zwei oder drei Engagierte ohne IT-Hintergrund typische Aufgaben aus, zum Beispiel ein Ticket beim Repair Café anlegen oder ein Dokument in Nextcloud finden.
 - **Auch auf dem Smartphone.** Beim Repair Café arbeiten Engagierte oft mit Tablet oder Smartphone, deshalb testen wir auch dort.
+
+## Härtung der Server
+
+Jede VM wird über die Basisrolle gehärtet, damit sie nach dem ersten Lauf von Ansible gleich abgesichert ist. Den größten Teil übernimmt eine gepflegte Collection, eigener Code ist nur für Firewall, Docker und unsere Ausnahmen nötig.
+
+- **Grundhärtung mit [devsec.hardening](https://github.com/dev-sec/ansible-collection-hardening).** Die Collection unterstützt laut README Debian 12 und 13 und folgt den DevSec-Baselines. os_hardening setzt sichere Kernel-Einstellungen, Rechte, Mount-Optionen und entfernt unsichere Pakete. ssh_hardening erlaubt nur moderne Algorithmen und Schlüssel. Docker braucht IP-Forwarding, das os_hardening standardmäßig abschaltet. Diese Ausnahme setzen wir in der Basisrolle ausdrücklich.
+- **SSH als einziger öffentlicher Zugang.** Nur Schlüssel, Root-Login nach dem ersten Lauf aus, Anmeldung nur für die Gruppe sudo über `AllowGroups`. Die Konfiguration prüfen wir mit [ssh-audit](https://github.com/jtesta/ssh-audit). Gegen massenhafte Anmeldeversuche läuft auf jeder VM CrowdSec statt fail2ban. Ein Agent liest die Anmeldungen von SSH aus dem [Journal](https://docs.crowdsec.net/docs/next/log_processor/data_sources/journald/), der [Firewall-Bouncer](https://docs.crowdsec.net/u/bouncers/firewall/) sperrt auffällige IP-Adressen per nftables. Alle Agenten melden an die [Local API](https://docs.crowdsec.net/docs/local_api/intro/) von CrowdSec auf der Zugangs-VM, die ohnehin für den NetBird-Proxy läuft. Eine Sperre auf einer VM gilt so für alle.
+- **Firewall mit nftables.** Eingehend ist alles gesperrt außer SSH, dem UDP-Port von NetBird und ICMP. Auf der Zugangs-VM kommen HTTPS und die Ports für STUN und Relay dazu. Weil Docker die Firewall umgeht, binden die Compose-Stacks Ports nur an die NetBird-Adresse.
+- **Docker.** In der daemon.json stehen neben den Logs auch `no-new-privileges` und `live-restore`. Container laufen wo möglich mit nur lesbarem Dateisystem, entzogenen Capabilities und Grenzen für Speicher und CPU. Geheimnisse kommen als Dateien statt als Umgebungsvariablen, weil `docker inspect` diese im Klartext zeigt. Die Agenten von Arcane und Beszel greifen auf den Docker-Socket zu, was Root-Rechten entspricht, deshalb sind sie nur über NetBird erreichbar.
+- **Updates.** unattended-upgrades mit Neustart um 02:00 und needrestart für Dienste nach Updates von Bibliotheken. Container aktualisiert Arcane nach den vereinbarten Regeln, Zammad von Hand.
+- **Regelmäßige Prüfung.** [Lynis](https://cisofy.com/lynis/) gibt es als Debian-Paket. Ein Rezept im Justfile und später ein nächtlicher Job in der CI erstellen einen Bericht, neue Warnungen fallen so auf.
+- **Grenzen.** Der Betreiber von OpenNebula hat Zugriff auf unsere VMs. Eine Verschlüsselung der Platten innerhalb der VM schützt davor kaum, wichtiger sind die verschlüsselten Backups mit restic. OpenNebula 5.12 bekommt keine Updates mehr und bietet die API nur unverschlüsselt an. Dieses Risiko kann nur der Betreiber beheben.
+
+Reihenfolge der Umsetzung:
+
+1. devsec.hardening mit der Ausnahme für Docker in die Basisrolle aufnehmen
+2. Firewall mit nftables und CrowdSec mit Firewall-Bouncer
+3. Einstellungen für Docker
+4. Lynis als Prüfung
+
+## Backups
+
+Jeder Dienst wird nach dem Vorgehen pro Dienst gesichert. Die Backups liegen in drei Kopien an zwei Orten, eine davon offline.
+
+| Kopie | Ort | Wie |
+|---|---|---|
+| 1 | Die Daten auf der VM selbst | Laufender Betrieb |
+| 2 | Storagebox | resticker auf jeder VM sichert per rclone in ein verschlüsseltes restic-Repository |
+| 3 | Festplatte an einem Raspberry Pi | Der Pi holt die Snapshots selbst von der Storagebox |
+
+- **Der Pi holt, die Server liefern nicht.** Ein kompromittierter Server kann die Kopie auf der Festplatte so weder erreichen noch löschen.
+- **Nur lesender Zugang.** Der Pi bekommt für die Storagebox einen eigenen Unterzugang, der nur lesen darf.
+- **Eigenes Repository.** Der Pi überträgt die Snapshots mit `restic copy` in ein eigenes restic-Repository auf der Festplatte, mit eigenem Passwort und eigenen Regeln zur Aufbewahrung. Ein einfaches Spiegeln würde Löschungen auf der Storagebox mitmachen.
+- **Wirklich offline.** Die Festplatte ist nur für den Abgleich eingeschaltet, zum Beispiel einmal pro Woche per Zeitschaltung. Der Abgleich meldet seinen Erfolg an Uptime Kuma.
+- **Wiederherstellung von beiden Orten.** Schritt 2 im Vorgehen pro Dienst prüft die Wiederherstellung von der Storagebox. Einmal im Jahr prüfen wir zusätzlich eine Wiederherstellung von der Festplatte.
 
 ## Vorgehen pro Dienst
 
@@ -209,11 +266,11 @@ Die VMs legen wir von Anfang an mit OpenTofu an, gestartet vom Rechner eines Adm
 
 Die Reihenfolge folgt den Abhängigkeiten. Was früher kommt, brauchen die späteren Schritte.
 
-1. **Grundlagen klären.** Zugang zu OpenNebula mit Kontingent für die VMs, Netz und öffentliche IPs, API-Schlüssel von lima-city für die DNS-Challenge, Namensschema für die Hosts.
-2. **Rollen übernehmen.** Aus dem alten Repo [docker-compose-server](https://github.com/makerspace-gt/docker-compose-server) nur die bewährten Rollen kopieren, also compose_deploy, resticker, traefik-crowdsec-stack und die Rollen für Zammad, Vaultwarden und Discourse mit ihren Aufgaben zur Wiederherstellung. Übernommene Dateien behalten ihre Lizenz CC BY 4.0 und werden nach REUSE gekennzeichnet. Ein Playbook site.yml mit Gruppen je VM anlegen und die Liste der Admins mit ihren SSH-Schlüsseln nur an einer Stelle in group_vars führen. Alle Geheimnisse mit einem neuen Vault-Passwort neu anlegen. Danach docker-compose-server archivieren
-3. **Basisrolle schreiben.** Locale, Zeitzone, Admin-Benutzer mit sudo statt root, SSH nur mit Schlüssel, unattended-upgrades, Docker, Traefik mit CrowdSec und resticker. Jede VM bekommt diese Rolle zuerst.
+1. **Grundlagen klären.** Zugang zu OpenNebula mit Kontingent für die VMs, Netz und öffentliche IPs, Zugang zur DNS-Verwaltung bei lima-city, Namensschema für die Hosts.
+2. **Rollen übernehmen.** Aus dem alten Repo [docker-compose-server](https://github.com/makerspace-gt/docker-compose-server) nur die bewährten Rollen kopieren, also compose_deploy, resticker und die Rollen für Zammad, Vaultwarden und Discourse mit ihren Aufgaben zur Wiederherstellung. Übernommene Dateien behalten ihre Lizenz CC BY 4.0 und werden nach REUSE gekennzeichnet. Ein Playbook site.yml mit Gruppen je VM anlegen und die Liste der Admins mit ihren SSH-Schlüsseln nur an einer Stelle in group_vars führen. Alle Geheimnisse mit einem neuen Vault-Passwort neu anlegen. Danach docker-compose-server archivieren
+3. **Basisrolle schreiben.** Locale, Zeitzone, Admin-Benutzer mit sudo statt root, SSH nur mit Schlüssel, unattended-upgrades, Logs mit 7 Tagen Aufbewahrung, Docker, NetBird-Client und resticker. Jede VM bekommt diese Rolle zuerst.
 4. **OpenTofu einrichten.** Provider für OpenNebula, Vorlage für Debian 13 mit SSH-Schlüssel über die Contextualization, verschlüsselter State. Die Inventardatei für Ansible schreibt OpenTofu.
-5. **Zugangs-VM aufbauen.** Basisrolle, Traefik mit DNS-Challenge, dann authentik, dann NetBird mit Anmeldung über authentik, dann Vaultwarden per Wiederherstellung aus dem Backup. Admins testen den NetBird-Client auf ihren Rechnern.
+5. **Zugangs-VM aufbauen.** Basisrolle, dann authentik, dann NetBird mit Proxy, Traefik und CrowdSec und Anmeldung über authentik, dann Vaultwarden per Wiederherstellung aus dem Backup. Admins testen den NetBird-Client auf ihren Rechnern.
 6. **Helpdesk-VM aufbauen.** Basisrolle, NetBird-Client, Zammad in aktueller Version, Tickets aus dem Backup wiederherstellen, Termin als Datumsfeld, Prüfung durch Engagierte und erst dann den DNS-Eintrag umstellen.
 7. **Mini-PC anbinden.** Sobald er geliefert ist, folgt der MANUEL-Plan ab Phase 1. Ollama wird über NetBird für die Helpdesk-VM freigegeben.
 
@@ -225,25 +282,28 @@ Vorbereitung:
 
 - [ ] Zugangs-VM mit öffentlicher IP per OpenTofu anlegen und DNS-Eintrag setzen
 - [ ] Grundsystem per Ansible einrichten
-- [ ] Rollen traefik und resticker schreiben, Traefik mit DNS-Challenge über lima-city und den API-Schlüssel im Ansible Vault
+- [ ] Basisrolle um Härtung nach dem Abschnitt Härtung der Server erweitern und mit Lynis prüfen
+- [ ] Rollen netbird_client und resticker schreiben, resticker mit Ziel Storagebox per rclone. Die Rolle netbird_client kommt in die Basisrolle aller VMs
+- [ ] Raspberry Pi mit Festplatte einrichten, der die Snapshots per `restic copy` von der Storagebox holt
 - [ ] Firewall für HTTPS und die UDP-Ports von STUN und Relay öffnen
 - [ ] Gestaltungsvorlage mit Logo, Favicon, Farben und Schrift unter branding/ anlegen
-- [ ] Fehlerseite in Traefik für Zugriffe ohne NetBird einrichten
 
-authentik nach der [Installationsanleitung](https://github.com/goauthentik/authentik/blob/main/website/docs/install-config/install/docker-compose.mdx) mit PostgreSQL, Server und Worker:
+authentik unter auth.makerspace-gt.de nach der [Installationsanleitung](https://github.com/goauthentik/authentik/blob/main/website/docs/install-config/install/docker-compose.mdx) mit PostgreSQL, Server und Worker:
 
 - [ ] Schritt 1 Läuft mit Backup, inklusive Startseite mit allen Diensten und angepasster Gestaltung
 - [ ] Schritt 2 Läuft mit Restore
 - [ ] Schritt 3 Produktiv aus Restore der geprüften Einrichtung
 
-NetBird mit Management, Signal, Relay und Dashboard. Als Vorlage dienen [getting-started.sh](https://github.com/netbirdio/netbird/blob/main/infrastructure_files/getting-started.sh) und die Compose-Vorlage für Traefik in upstream/netbird:
+NetBird unter netbird.makerspace-gt.de mit Management, Signal, Relay und Dashboard. Als Vorlage dienen [getting-started.sh](https://github.com/netbirdio/netbird/blob/main/infrastructure_files/getting-started.sh) und die Compose-Vorlage für Traefik in upstream/netbird:
 
 - [ ] Schritt 1 Läuft mit Backup, inklusive [Anmeldung über authentik](https://docs.netbird.io/selfhosted/identity-providers/authentik) und Monitor in Uptime Kuma, weil ohne Management und Relay keine neuen Verbindungen zustande kommen
+- [ ] Reverse Proxy von NetBird mit eigenem OAuth-Client in authentik einrichten und mit einem ersten Dienst testen
+- [ ] DNS-Zonen in NetBird für die Dienste anlegen, die nur per VPN erreichbar sind, und die Anleitungsseite hinter den Proxy legen
 - [ ] Schritt 2 Läuft mit Restore, weil ohne die Datenbank des Management-Servers alle Peers und Regeln neu angelegt werden müssen
 - [ ] Schritt 3 Produktiv aus Restore der geprüften Einrichtung
 - [ ] Anleitung für Engagierte zum Einrichten des NetBird-Clients schreiben
 
-Vaultwarden, ohne Anmeldung über authentik, damit es auch bei einem Ausfall von authentik erreichbar bleibt:
+Vaultwarden unter vault.makerspace-gt.de über den Proxy, damit auch Mitglieder einen Passwortmanager nutzen können. Anmeldung über authentik und zusätzlich lokal, damit Vaultwarden auch bei einem Ausfall von authentik nutzbar bleibt. Das Master-Passwort bleibt in beiden Fällen nötig, weil es den Tresor entschlüsselt. Neue Konten nur per Einladung, Zwei-Faktor-Anmeldung für die lokale Anmeldung als Pflicht und die Verwaltung unter /admin am Proxy gesperrt:
 
 - [ ] Schritt 1 Läuft mit Backup
 - [ ] Schritt 2 Läuft mit Restore
@@ -252,7 +312,7 @@ Vaultwarden, ohne Anmeldung über authentik, damit es auch bei einem Ausfall von
 Danach:
 
 - [ ] Festlegen, welche Teile von Zammad, Discourse und Nextcloud für Gäste öffentlich bleiben
-- [ ] Weboberflächen Dienst für Dienst nur noch über NetBird erreichbar machen und Zugriffsregeln nach Gruppen aus authentik anlegen
+- [ ] Dienste nach der Tabelle im Abschnitt Erreichbarkeit über den Proxy oder nur per VPN erreichbar machen und Zugriffsregeln nach Gruppen aus authentik anlegen
 
 ## Stufe 1 Helpdesk-VM
 
@@ -267,6 +327,7 @@ Zammad in einer Version mit Ollama-Anbieter, Ticket Categorizer, Ticket Text Ext
 - [ ] Schritt 2 Läuft mit Restore
 - [ ] Schritt 3 Produktiv aus Restore des Backups vom alten Zammad, dabei Wartezeiten in das neue Datumsfeld Termin überführen
 - [ ] Ansichten für das Repair Café vor der Umstellung mit Engagierten testen, auch auf Tablet und Smartphone
+- [ ] Zeitgesteuerte Aktionen mit Löschauftrag anlegen, Repair Café 3 Jahre nach Abschluss, Anfragen ohne Erscheinen nach 3 Monaten, übrige Tickets 10 Jahre nach Abschluss, siehe [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md)
 
 ## Upstream-Submodule
 
