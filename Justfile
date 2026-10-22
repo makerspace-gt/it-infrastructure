@@ -32,7 +32,7 @@ plan:
 
 # Apply changes, then commit and push state and inventory
 [group('tofu')]
-[confirm("Apply changes in OpenNebula and push the state?")]
+[confirm("Apply changes in OpenNebula and push the state? Type y or yes to continue:")]
 apply:
     git pull --ff-only
     cd tofu && source env.sh && tofu apply

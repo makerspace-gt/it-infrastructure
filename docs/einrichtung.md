@@ -49,7 +49,7 @@ just plan
 just apply
 ```
 
-[vms.tf](../tofu/vms.tf) enthält zunächst nur die VM test. Die SSH-Schlüssel der Admins holt OpenTofu von GitHub und übergibt sie über die Contextualization von OpenNebula an root. `just apply` fragt vorher nach, prüft danach, dass der State verschlüsselt ist, und committet und pusht State, Lock-Datei und Inventar. Die IP-Adressen zeigt:
+[vms.tf](../tofu/vms.tf) enthält zunächst nur die VM test. Die SSH-Schlüssel der Admins holt OpenTofu von GitHub und übergibt sie über die Contextualization von OpenNebula an root. `just apply` fragt zweimal nach. Zuerst fragt just, ob das Rezept laufen soll, das bestätigt ihr mit y. Dann zeigt OpenTofu den Plan und verlangt genau das Wort yes. Danach prüft das Rezept, dass der State verschlüsselt ist, und committet und pusht State, Lock-Datei und Inventar. Die IP-Adressen zeigt:
 
 ```bash
 just ips
