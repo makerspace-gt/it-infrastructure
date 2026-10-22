@@ -38,3 +38,7 @@
 	path = upstream/arcane
 	url = https://github.com/getarcaneapp/arcane.git
 	shallow = true
+[submodule "upstream/beszel"]
+	path = upstream/beszel
+	url = https://github.com/henrygd/beszel.git
+	shallow = true
