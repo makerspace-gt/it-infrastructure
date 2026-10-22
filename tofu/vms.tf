@@ -7,6 +7,7 @@ locals {
       cpu      = 1
       vcpu     = 2
       memory   = 2048
+      disk_gb  = 20
       groups   = ["test"]
       location = null
     }
@@ -26,6 +27,10 @@ data "opennebula_template" "debian" {
   name = var.template_name
 }
 
+data "opennebula_image" "debian" {
+  name = var.image_name
+}
+
 data "opennebula_virtual_network" "network" {
   for_each = toset([for location in values(local.vm_locations) : location.network])
   name     = each.key
@@ -40,6 +45,11 @@ resource "opennebula_virtual_machine" "vm" {
   vcpu        = each.value.vcpu
   memory      = each.value.memory
 
+  # Copying the image to a host can take long
+  timeouts {
+    create = "90m"
+  }
+
   # Only the cluster and, if given, the hosts of the location are allowed
   sched_requirements = local.vm_sched_requirements[each.key] == "" ? null : local.vm_sched_requirements[each.key]
 
@@ -47,6 +57,12 @@ resource "opennebula_virtual_machine" "vm" {
     NETWORK        = "YES"
     SET_HOSTNAME   = "$NAME"
     SSH_PUBLIC_KEY = local.ssh_public_keys
+  }
+
+  # Replaces the disk of the template with a resized copy of the same image
+  disk {
+    image_id = data.opennebula_image.debian.id
+    size     = each.value.disk_gb * 1024
   }
 
   nic {
