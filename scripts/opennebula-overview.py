@@ -132,6 +132,20 @@ def datastores(proxy, session):
     table("Datastores", ["ID", "NAME", "CLUSTER_IDS", "FREI_MB", "GESAMT_MB"], rows)
 
 
+IMAGE_STATES = {
+    "0": "INIT", "1": "READY", "2": "USED", "3": "DISABLED", "4": "LOCKED", "5": "ERROR",
+    "6": "CLONE", "7": "DELETE", "8": "USED_PERS", "9": "LOCKED_USED", "10": "LOCKED_USED_PERS",
+}
+
+
+def images(proxy, session):
+    pool = call(proxy, "one.imagepool.info", session, FILTER_ALL, -1, -1)
+    rows = [[text(i, "ID"), text(i, "NAME"), IMAGE_STATES.get(text(i, "STATE"), text(i, "STATE")),
+             text(i, "DATASTORE"), text(i, "SIZE"), text(i, "FORMAT") or text(i, "TEMPLATE/FORMAT") or text(i, "TEMPLATE/DRIVER") or "-", text(i, "UNAME")]
+            for i in pool.findall("IMAGE")]
+    table("Images", ["ID", "NAME", "STATUS", "DATASTORE", "GROESSE_MB", "FORMAT", "BESITZER"], rows)
+
+
 def templates(proxy, session):
     pool = call(proxy, "one.templatepool.info", session, FILTER_ALL, -1, -1)
     rows = [[text(t, "ID"), text(t, "NAME"), text(t, "UNAME"), text(t, "GNAME")] for t in pool.findall("VMTEMPLATE")]
@@ -155,7 +169,7 @@ def vms(proxy, session):
 
 SECTIONS = {
     "cluster": clusters, "hosts": hosts, "netze": networks,
-    "datastores": datastores, "vorlagen": templates, "vms": vms,
+    "datastores": datastores, "images": images, "vorlagen": templates, "vms": vms,
 }
 
 
