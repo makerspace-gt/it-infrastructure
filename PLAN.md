@@ -327,6 +327,7 @@ Zammad in einer Version mit Ollama-Anbieter, Ticket Categorizer, Ticket Text Ext
 - [ ] Schritt 2 Läuft mit Restore
 - [ ] Schritt 3 Produktiv aus Restore des Backups vom alten Zammad, dabei Wartezeiten in das neue Datumsfeld Termin überführen
 - [ ] Ansichten für das Repair Café vor der Umstellung mit Engagierten testen, auch auf Tablet und Smartphone
+- [ ] Unter Einstellungen, System, Dienste den Geo Location Service auf - stellen. Standardmäßig schickt Zammad die Adressen von Kunden an Nominatim von OpenStreetMap, siehe [performs_geo_lookup.rb](https://github.com/zammad/zammad/blob/develop/app/models/user/performs_geo_lookup.rb), Karten nutzen wir nicht
 - [ ] Zeitgesteuerte Aktionen mit Löschauftrag anlegen, Repair Café 3 Jahre nach Abschluss, Anfragen ohne Erscheinen nach 3 Monaten, übrige Tickets 3 Jahre nach Abschluss, mit steuerlich relevanten Belegen 10 Jahre, siehe [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md)
 
 ## Upstream-Submodule
