@@ -37,3 +37,10 @@ Diese Übersicht beschreibt die Maßnahmen nach [Art. 32 DSGVO](https://dsgvo-ge
 
 - Regelmäßige Prüfung der Server mit Lynis.
 - Diese Übersicht und das Verzeichnis der Verarbeitungstätigkeiten prüfen wir einmal im Jahr und bei jeder größeren Änderung.
+
+## Ausblick
+
+Diese Maßnahmen sind vorerst nicht umgesetzt. Wir prüfen sie bei der jährlichen Überprüfung erneut:
+
+- **Zwei-Faktor-Pflicht für Admins und Vorstand.** Über eine Richtlinie für deren Gruppen in authentik, siehe [Authenticator Validation Stage](https://docs.goauthentik.io/add-secure-apps/flows-stages/stages/authenticator_validate/). Engagierte bleiben davon unberührt.
+- **Passwortrichtlinie in authentik.** Mindestlänge und Abgleich mit bekannten geleakten Passwörtern über die [Password Policy](https://docs.goauthentik.io/customize/policies/types/password/). Ohne Zwei-Faktor-Anmeldung ist das Passwort der einzige Schutz der Gästedaten in Zammad.
