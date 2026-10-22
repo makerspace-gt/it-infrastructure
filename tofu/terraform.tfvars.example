@@ -7,6 +7,10 @@ locations = {
     hosts   = ["host1", "host2"]
     network = "network-name"
   }
+  example2 = {
+    hosts   = ["host3"]
+    network = "network-name-2"
+  }
 }
 
 default_location = "example"
