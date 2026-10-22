@@ -57,18 +57,29 @@ Zu einzelnen Diensten:
 
 ## Maschinen und Werkzeuge
 
-Bestimmte Maschinen dürfen nur Personen nutzen, die eingewiesen sind. Die Einweisung dient vor allem der Sicherheit. Für den Datenschutz zählt, dass die Liste der Eingewiesenen personenbezogene Daten enthält.
+Bestimmte Maschinen dürfen nur Personen nutzen, die eingewiesen sind. Gründe dafür sind:
 
-| Maschine | Einweisung nötig | Einweisen dürfen |
+- **Gefahr.** Die Maschine kann Menschen verletzen oder einen Brand auslösen
+- **Teure Maschine.** Falsche Bedienung kann teure Schäden verursachen
+- **Teures Material.** Fehldrucke oder Verschnitt kosten viel
+- **Störung anderer.** Lärm, Staub oder Geruch stören andere in der Werkstatt, deshalb gelten feste Regeln für die Nutzung
+
+Für den Datenschutz zählt, dass die Liste der Eingewiesenen personenbezogene Daten enthält.
+
+Die Gründe sind ein Vorschlag:
+
+| Maschine | Gründe | Einweisen dürfen |
 |---|---|---|
-| CO2-Lasercutter | Ja | Einweisende Lasercutter |
-| Shaper Origin | Ja | Einweisende Shaper Origin |
-| Portal-CNC-Fräse | Ja | Einweisende CNC-Fräse |
-| Maschinen der Holzwerkstatt | Ja, Vorschlag | Einweisende Holzwerkstatt |
-| 3D-Drucker Bambu Lab A2L | Vorschlag | Einweisende 3D-Druck |
-| 3D-Drucker von Prusa, FDM und Resin SL1S | Vorschlag, Resin ja | Einweisende 3D-Druck |
-| Stickmaschine, Overlock und Schneideplotter ScanNCut CM900 | Vorschlag | Einweisende Textilwerkstatt |
-| Elektronik-Labor | Nein, Vorschlag | |
+| CO2-Lasercutter | Gefahr, teure Maschine, Störung anderer | Einweisende Lasercutter |
+| Shaper Origin | Gefahr, teure Maschine | Einweisende Shaper Origin |
+| Portal-CNC-Fräse | Gefahr, Störung anderer | Einweisende CNC-Fräse |
+| Maschinen der Holzwerkstatt | Gefahr, Störung anderer | Einweisende Holzwerkstatt |
+| 3D-Drucker Bambu Lab A2L | Teure Maschine | Einweisende 3D-Druck |
+| 3D-Drucker von Prusa, FDM | Keine Einweisung nötig | |
+| 3D-Drucker von Prusa, Resin SL1S | Gefahr durch Chemikalien, teures Material, Störung anderer | Einweisende 3D-Druck |
+| Stickmaschine | Teure Maschine | Einweisende Textilwerkstatt |
+| Overlock und Schneideplotter ScanNCut CM900 | Keine Einweisung nötig | |
+| Elektronik-Labor | Keine Einweisung nötig | |
 
 Umsetzung, Vorschlag:
 

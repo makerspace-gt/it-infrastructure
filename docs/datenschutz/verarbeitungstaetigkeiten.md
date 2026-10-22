@@ -211,7 +211,7 @@ Die Angaben stehen in der Datenschutzerklärung der Webseite.
 
 ### 19 Einweisungen an Maschinen
 
-- **Zweck:** Sicherstellen, dass nur eingewiesene Personen gefährliche Maschinen nutzen, Nachweis für Haftung und Versicherung
+- **Zweck:** Sicherstellen, dass nur eingewiesene Personen Maschinen nutzen, die gefährlich oder teuer sind, teures Material verbrauchen oder andere stören, Nachweis für Haftung und Versicherung
 - **Betroffene:** Mitglieder und Engagierte
 - **Daten:** Name, Maschine, Datum der Einweisung, einweisende Person, unterschriebene Bestätigung
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO aus der Mitgliedschaft, lit. f für den Nachweis
