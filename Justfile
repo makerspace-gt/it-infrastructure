@@ -34,15 +34,6 @@ apply:
     just state-check
     just state-push "apply tofu"
 
-# Destroy all VMs, then commit and push state and inventory
-[group('tofu')]
-[confirm("Destroy all VMs in OpenNebula and push the state?")]
-destroy:
-    git pull --ff-only
-    cd tofu && source env.sh && tofu destroy
-    just state-check
-    just state-push "destroy tofu"
-
 # Show the IP address of every VM
 [group('tofu')]
 ips:

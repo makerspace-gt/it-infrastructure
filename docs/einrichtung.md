@@ -95,11 +95,9 @@ Kommt es doch zu einem Konflikt im State, wird er nicht von Hand zusammengeführ
 
 ## 6 Prüfen und aufräumen
 
-Vor jedem Commit prüft `just lint` die Formatierung und die Konfiguration von OpenTofu und Ansible, `just fmt` formatiert die .tf-Dateien. Die Test-VM wieder löschen, wenn alles funktioniert:
+Vor jedem Commit prüft `just lint` die Formatierung und die Konfiguration von OpenTofu und Ansible, `just fmt` formatiert die .tf-Dateien.
 
-```bash
-just destroy
-```
+Eine VM wird gelöscht, indem man ihren Eintrag aus [vms.tf](../tofu/vms.tf) entfernt und `just apply` ausführt. Der Plan zeigt dann genau diese VM als zu löschen an, alle anderen bleiben unberührt. Ein Rezept für `tofu destroy` gibt es bewusst nicht, weil es alle VMs auf einmal löschen würde.
 
 ## Offene Punkte
 

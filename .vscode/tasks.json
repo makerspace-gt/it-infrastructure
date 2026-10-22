@@ -49,17 +49,6 @@
       }
     },
     {
-      "label": "just: tofu destroy",
-      "type": "shell",
-      "command": "just destroy",
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "clear": true
-      }
-    },
-    {
       "label": "just: tofu ips",
       "type": "shell",
       "command": "just ips",
