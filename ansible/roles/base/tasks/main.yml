@@ -2,8 +2,8 @@
 - name: Install base packages
   ansible.builtin.apt:
     name: "{{ base_packages }}"
+    # Fresh cloud images have empty package lists with a recent mtime, cache_valid_time would skip the update
     update_cache: true
-    cache_valid_time: 3600
 
 - name: Set hostname
   ansible.builtin.hostname:
