@@ -22,10 +22,11 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 | 10 | Neuigkeiten des Repair Cafés | reparatur-initiativen.org |
 | 11 | Statistik zu Reparaturen | n8n, reparatur-initiativen.org, Open Repair Alliance |
 | 12 | Terminabfragen unter Engagierten | Nuudel |
-| 13 | Kommunikation und Benachrichtigungen | Signal, signal-cli-rest-api |
+| 13 | Kommunikation und Benachrichtigungen | Signal, signal-cli-rest-api, gegebenenfalls WhatsApp |
 | 14 | Betrieb und Sicherheit der IT | Logs, CrowdSec, Backups, Uptime Kuma, Beszel |
 | 15 | Mitgliederverwaltung | Zu ergänzen |
 | 16 | Webseite | WordPress bei lima-city |
+| 17 | Telefonie | sipgate |
 
 ## Einzelheiten
 
@@ -156,7 +157,7 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 - **Daten:** Telefonnummer, Nachrichten
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. a und b DSGVO
 - **Empfänger:** Mitglieder der jeweiligen Gruppe
-- **Drittland:** Signal wird aus den USA betrieben, die Inhalte sind Ende-zu-Ende verschlüsselt
+- **Drittland:** Signal und WhatsApp werden aus den USA betrieben, die Inhalte sind Ende-zu-Ende verschlüsselt. Einordnung siehe [Auftragsverarbeitung](auftragsverarbeitung.md#messenger)
 - **Löschung:** Nach Austritt aus der Gruppe
 
 ### 14 Betrieb und Sicherheit der IT
@@ -176,3 +177,13 @@ Zu ergänzen, sobald feststeht, mit welchem Werkzeug der Verein seine Mitglieder
 ### 16 Webseite
 
 Die Angaben stehen in der Datenschutzerklärung der Webseite.
+
+### 17 Telefonie
+
+- **Zweck:** Erreichbarkeit des Vereins und des Repair Cafés per Telefon
+- **Betroffene:** Anrufende, Mitglieder und Engagierte
+- **Daten:** Rufnummern, Verbindungsdaten, Nachrichten auf dem Anrufbeantworter, gegebenenfalls SMS
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b und f DSGVO
+- **Empfänger:** Zuständige Engagierte, sipgate als Auftragsverarbeiter
+- **Drittland:** Nein
+- **Löschung:** Verbindungsdaten nach den Einstellungen bei sipgate, Nachrichten nach Übernahme ins Ticket
