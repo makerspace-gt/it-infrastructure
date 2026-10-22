@@ -124,10 +124,11 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 ### 10 Newsletter des Repair Cafés
 
 - **Zweck:** Gäste über Termine des Repair Cafés informieren, der Versand läuft über reparatur-initiativen.org
+- **Ablauf:** Engagierte fragen Gäste, ob sie den Newsletter möchten. Nur auf Wunsch tragen wir die E-Mail-Adresse auf reparatur-initiativen.org ein und vermerken den Wunsch mit Datum im Ticket. Die Plattform schickt eine Bestätigungsmail, erst damit ist die Anmeldung abgeschlossen
 - **Betroffene:** Gäste mit Einwilligung
 - **Daten:** E-Mail
-- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. a DSGVO mit Double-Opt-in. Die Einwilligung nennt die anstiftung als Empfängerin der E-Mail-Adresse
-- **Empfänger:** Plattform reparatur-initiativen.org der anstiftung, Einordnung siehe [Auftragsverarbeitung](auftragsverarbeitung.md)
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. a DSGVO für die Übermittlung an die anstiftung auf Wunsch der Gäste, die Einwilligung in den Newsletter bestätigen die Gäste per Double-Opt-in bei der Plattform. Bei der Nachfrage nennen wir die anstiftung als Empfängerin der E-Mail-Adresse
+- **Empfänger:** Plattform reparatur-initiativen.org der anstiftung als voraussichtlich eigener Verantwortlicher, siehe [Auftragsverarbeitung](auftragsverarbeitung.md)
 - **Drittland:** Nein
 - **Löschung:** Bei Abmeldung
 
