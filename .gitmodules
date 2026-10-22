@@ -30,3 +30,7 @@
 	path = upstream/vikunja
 	url = https://github.com/go-vikunja/vikunja.git
 	shallow = true
+[submodule "upstream/authentik"]
+	path = upstream/authentik
+	url = https://github.com/goauthentik/authentik.git
+	shallow = true
