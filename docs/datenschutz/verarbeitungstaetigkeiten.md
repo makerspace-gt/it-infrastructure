@@ -49,7 +49,7 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b oder f DSGVO
 - **Empfänger:** Zuständige Engagierte und Vorstand
 - **Drittland:** Nein
-- **Löschung:** 10 Jahre nach Abschluss
+- **Löschung:** 3 Jahre nach Abschluss, Tickets mit steuerlich relevanten Belegen 10 Jahre
 
 ### 3 Konten und Zugänge
 

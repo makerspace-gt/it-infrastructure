@@ -327,7 +327,7 @@ Zammad in einer Version mit Ollama-Anbieter, Ticket Categorizer, Ticket Text Ext
 - [ ] Schritt 2 Läuft mit Restore
 - [ ] Schritt 3 Produktiv aus Restore des Backups vom alten Zammad, dabei Wartezeiten in das neue Datumsfeld Termin überführen
 - [ ] Ansichten für das Repair Café vor der Umstellung mit Engagierten testen, auch auf Tablet und Smartphone
-- [ ] Zeitgesteuerte Aktionen mit Löschauftrag anlegen, Repair Café 3 Jahre nach Abschluss, Anfragen ohne Erscheinen nach 3 Monaten, übrige Tickets 10 Jahre nach Abschluss, siehe [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md)
+- [ ] Zeitgesteuerte Aktionen mit Löschauftrag anlegen, Repair Café 3 Jahre nach Abschluss, Anfragen ohne Erscheinen nach 3 Monaten, übrige Tickets 3 Jahre nach Abschluss, mit steuerlich relevanten Belegen 10 Jahre, siehe [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md)
 
 ## Upstream-Submodule
 
