@@ -46,3 +46,7 @@
 	path = upstream/opentofu
 	url = https://github.com/opentofu/opentofu.git
 	shallow = true
+[submodule "upstream/forgejo"]
+	path = upstream/forgejo
+	url = https://codeberg.org/forgejo/forgejo.git
+	shallow = true
