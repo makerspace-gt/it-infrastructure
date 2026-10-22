@@ -1,0 +1,31 @@
+---
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ base_packages }}"
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Generate locales
+  community.general.locale_gen:
+    name: "{{ item }}"
+  loop: "{{ base_locales }}"
+
+- name: Set timezone
+  community.general.timezone:
+    name: "{{ base_timezone }}"
+
+- name: Configure unattended upgrades
+  ansible.builtin.import_tasks: unattended_upgrades.yml
+
+- name: Install Docker
+  ansible.builtin.import_tasks: docker.yml
+
+- name: Create admin users
+  ansible.builtin.import_tasks: admins.yml
+
+- name: Harden SSH
+  ansible.builtin.import_tasks: ssh.yml

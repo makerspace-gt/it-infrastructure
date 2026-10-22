@@ -1,0 +1,4 @@
+# Managed by Ansible
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PermitRootLogin {{ 'no' if base_disable_root_login else 'prohibit-password' }}

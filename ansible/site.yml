@@ -1,0 +1,22 @@
+---
+- name: Base system for all hosts
+  hosts: all
+  become: true
+  roles:
+    - base
+
+# - name: Zugang
+#   hosts: zugang
+#   become: true
+#   roles:
+#     - traefik
+#     - authentik
+#     - netbird
+#     - vaultwarden
+
+# - name: Helpdesk
+#   hosts: helpdesk
+#   become: true
+#   roles:
+#     - traefik
+#     - zammad

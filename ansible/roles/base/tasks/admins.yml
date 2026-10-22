@@ -1,0 +1,32 @@
+---
+- name: Create or remove admin users
+  ansible.builtin.user:
+    name: "{{ item.user }}"
+    comment: "{{ item.name | default(omit) }}"
+    groups: [sudo, docker]
+    append: true
+    shell: /bin/bash
+    state: "{{ item.state | default('present') }}"
+    remove: "{{ (item.state | default('present')) == 'absent' }}"
+  loop: "{{ admins }}"
+  loop_control:
+    label: "{{ item.user }}"
+
+- name: Deploy SSH keys from GitHub
+  ansible.posix.authorized_key:
+    user: "{{ item.user }}"
+    key: "https://github.com/{{ item.github }}.keys"
+    exclusive: true
+  loop: "{{ admins }}"
+  loop_control:
+    label: "{{ item.user }}"
+  when: (item.state | default('present')) == 'present'
+
+- name: Allow admins to use sudo without password
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/admins
+    content: |
+      # Managed by Ansible
+      %sudo ALL=(ALL:ALL) NOPASSWD: ALL
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s

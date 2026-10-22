@@ -1,0 +1,19 @@
+---
+# Single source of truth for admin access.
+# OpenTofu reads this file for the SSH keys of new VMs,
+# Ansible creates a user with sudo for every admin.
+# Keys are fetched from https://github.com/<github>.keys
+# Set state: absent to remove an admin from all hosts.
+admins:
+  - github: igami
+    user: igami
+    name: Michael Prange
+  - github: nielsfechtel
+    user: nielsfechtel
+    name: Niels Fechtel
+  - github: C0RD
+    user: c0rd
+    name: Cord Beermann
+  - github: ulno
+    user: ulno
+    name: Ulrich Norbisrath

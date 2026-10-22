@@ -1,0 +1,21 @@
+---
+base_timezone: Europe/Berlin
+base_locales:
+  - de_DE.UTF-8
+  - en_US.UTF-8
+
+# Unattended upgrades reboot the host at this time if a reboot is required
+base_reboot_time: "02:00"
+
+# Keep root login with key until all admins have tested their own account
+base_disable_root_login: false
+
+base_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - locales
+  - sudo
+  - unattended-upgrades
+  - apt-listchanges
