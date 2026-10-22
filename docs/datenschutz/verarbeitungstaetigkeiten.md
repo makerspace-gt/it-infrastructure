@@ -204,6 +204,6 @@ Die Angaben stehen in der Datenschutzerklärung der Webseite.
 - **Betroffene:** Besucher der Profile und des Kanals, abgebildete Personen, Bewertende bei Google Maps
 - **Daten:** Veröffentlichte Beiträge, Fotos und Videos, Statistiken über Besucher, Nachrichten an den Verein, Bewertungen
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. f DSGVO für den Auftritt, lit. a für Fotos von Personen
-- **Empfänger:** Öffentlich, Meta als gemeinsam Verantwortlicher für die Statistiken bei Instagram, Google für YouTube und Google Maps, der Betreiber von social.tchncs.de und per Föderation andere Mastodon-Instanzen, siehe [Auftragsverarbeitung](auftragsverarbeitung.md#soziale-medien-und-google)
+- **Empfänger:** Öffentlich, Meta und Google als gemeinsam Verantwortliche für die Statistiken bei Instagram und YouTube, Google für Google Maps, der Betreiber von social.tchncs.de und per Föderation andere Mastodon-Instanzen, siehe [Auftragsverarbeitung](auftragsverarbeitung.md#soziale-medien-und-google)
 - **Drittland:** USA
 - **Löschung:** Beiträge auf Wunsch abgebildeter Personen, Nachrichten nach Übernahme ins Ticket
