@@ -6,8 +6,8 @@ Diese Übersicht beschreibt die Maßnahmen nach [Art. 32 DSGVO](https://dsgvo-ge
 
 - **Zugang zu den Servern.** Die VMs laufen bei 4830.org e.V. in Rechenzentren. Aus dem Internet ist auf ihnen nur SSH erreichbar, und das nur mit Schlüssel. Root-Anmeldung ist abgeschaltet, Admins melden sich mit eigenem Konto an.
 - **Zugang zu den Diensten.** Öffentliche Dienste sind nur über den Reverse Proxy von NetBird erreichbar, bei Bedarf mit vorgeschalteter Anmeldung. Kritische Dienste sind nur per VPN erreichbar.
-- **Anmeldung.** Ein zentrales Konto in authentik für alle Dienste, mit Zwei-Faktor-Anmeldung. Konten werden bei Austritt gesperrt.
-- **Rechte.** Zugriff nach Gruppen, jede Person bekommt nur, was sie für ihre Aufgabe braucht. Gästedaten im Repair Café sehen nur die Engagierten des Repair Cafés.
+- **Anmeldung.** Ein zentrales Konto in authentik für alle Dienste. Zwei-Faktor-Anmeldung ist möglich, für Engagierte aber keine Pflicht. Konten werden bei Austritt gesperrt.
+- **Rechte.** Zugriff nach Gruppen, jede Person bekommt nur, was sie für ihre Aufgabe braucht. Gästedaten im Repair Café sehen alle Engagierten mit Konto in Zammad. Zammad kann Kontaktdaten nicht nach Gruppen ausblenden, jedes Konto mit der Rolle Agent sieht alle Kunden, siehe [user_policy.rb](https://github.com/zammad/zammad/blob/develop/app/policies/user_policy.rb). Wir nehmen das in Kauf, weil Engagierte Gäste für Rückfragen zur Reparatur erreichen müssen. Ein Konto gibt es erst nach der Verpflichtung auf Vertraulichkeit, bei Austritt wird es gesperrt.
 - **Passwörter.** In Vaultwarden, verschlüsselt mit einem Master-Passwort, das nur die Nutzenden kennen.
 - **Geheimnisse der Infrastruktur.** Verschlüsselt im Ansible Vault und im verschlüsselten State von OpenTofu, nie im Klartext im Repo.
 - **Trennung.** Dienste laufen in getrennten Containern auf VMs nach Aufgabe. Zugänge und Passwörter liegen auf einer anderen VM als Dienste, die Daten von außen verarbeiten.

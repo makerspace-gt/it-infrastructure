@@ -37,7 +37,7 @@ Makerspace Gütersloh e.V., c/o WEBEREI, Bogenstraße 1-8, 33330 Gütersloh, ver
 - **Betroffene:** Gäste des Repair Cafés
 - **Daten:** Name, E-Mail, Telefon, Angaben zum Gerät und Defekt, Fotos von Geräten und Typenschildern, Ergebnis der Reparatur, Einwilligung in den Newsletter
 - **Rechtsgrundlage:** [Art. 6 Abs. 1 lit. b DSGVO](https://dsgvo-gesetz.de/art-6-dsgvo/) für Terminvergabe und Reparatur, lit. a für den Newsletter
-- **Empfänger:** Engagierte des Repair Cafés. MANUEL verarbeitet die Daten lokal auf dem Mini-PC des Vereins, es gehen keine Daten an externe KI-Anbieter
+- **Empfänger:** Alle Engagierten mit Konto in Zammad, die Kontaktdaten lassen sich dort nicht auf einzelne Gruppen beschränken. MANUEL verarbeitet die Daten lokal auf dem Mini-PC des Vereins, es gehen keine Daten an externe KI-Anbieter
 - **Drittland:** Nein
 - **Löschung:** 3 Jahre nach Abschluss, Anfragen ohne Erscheinen nach 3 Monaten
 
