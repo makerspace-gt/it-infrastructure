@@ -153,7 +153,7 @@ Für den Überblick, welche Bibliotheken in welchem Dienst stecken und unter wel
 
 ## Datenschutz
 
-Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Welcher Dienst welche Daten wie lange speichert, steht in [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md). Die meisten Bausteine sind Dokumente, die beschreiben, was wir ohnehin tun. Das ist keine Rechtsberatung, im Zweifel holen wir uns Rat beim Landesdatenschutz oder bei einem Dachverband.
+Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Öffentlich dokumentiert sind [Daten und Aufbewahrung](docs/datenschutz/verarbeitungen.md), die [Verarbeitungstätigkeiten](docs/datenschutz/verarbeitungstaetigkeiten.md) und die [Auftragsverarbeitung](docs/datenschutz/auftragsverarbeitung.md). Privat bleiben Namen und Kontakte der Verantwortlichen, die unterschriebenen Verträge im Gruppenordner des Vorstands in Nextcloud sowie Anfragen von Betroffenen und Datenpannen in einer eigenen Gruppe in Zammad. Die meisten Bausteine sind Dokumente, die beschreiben, was wir ohnehin tun. Das ist keine Rechtsberatung, im Zweifel holen wir uns Rat beim Landesdatenschutz oder bei einem Dachverband.
 
 | Baustein | Inhalt |
 |---|---|
