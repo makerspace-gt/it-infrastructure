@@ -81,7 +81,32 @@ Erst wenn das für alle klappt, wird in group_vars `base_disable_root_login: tru
 ansible-playbook site.yml -u <benutzer>
 ```
 
-## 5 Aufräumen
+## 5 State synchronisieren
+
+Der State von OpenTofu liegt verschlüsselt als tofu/terraform.tfstate im Repo. Weil versions.tf unverschlüsselte States verweigert, kann ohne TF_ENCRYPTION kein Klartext entstehen. Eine Sperre gegen gleichzeitige Änderungen gibt es dabei nicht. Deshalb gilt:
+
+1. Vor jedem `tofu plan` oder `tofu apply` den neuesten Stand holen.
+2. Im Admin-Chat Bescheid geben, dass man gerade OpenTofu ausführt.
+3. Direkt nach `tofu apply` den State zusammen mit den Änderungen an den .tf-Dateien und dem Inventar committen und pushen.
+
+```bash
+git pull
+cd tofu
+tofu apply
+git add terraform.tfstate .terraform.lock.hcl ../ansible/inventory/hosts.yml *.tf
+git commit -m "apply tofu"
+git push
+```
+
+Vor dem Commit lässt sich prüfen, dass der State wirklich verschlüsselt ist. Ein verschlüsselter State enthält den Schlüssel encrypted_data.
+
+```bash
+grep -q encrypted_data terraform.tfstate && echo verschlüsselt
+```
+
+Kommt es doch zu einem Konflikt im State, wird er nicht von Hand zusammengeführt. Stattdessen nimmt man den Stand vom Server und führt `tofu apply` erneut aus.
+
+## 6 Aufräumen
 
 Die Test-VM wieder löschen, wenn alles funktioniert.
 
@@ -92,5 +117,5 @@ tofu destroy
 
 ## Offene Punkte
 
-- **Ablage des State.** Der verschlüsselte State liegt vorerst nur lokal beim Admin, der OpenTofu ausführt. Bevor mehrere Admins damit arbeiten, entscheiden wir, ob der verschlüsselte State ins Repo kommt oder in ein Backend auf der Verwaltungs-VM.
+- **Backend mit Sperre.** Sobald die Verwaltungs-VM steht, zieht der State in ein S3-Backend mit Sperre über `use_lockfile`, zum Beispiel mit Garage oder MinIO. Dann kann auch die CI OpenTofu ausführen.
 - **Rechte in OpenNebula.** Für OpenTofu lohnt sich ein eigener Benutzer in OpenNebula, der nur die VMs dieses Repos verwalten darf.
