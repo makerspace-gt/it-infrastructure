@@ -6,3 +6,7 @@
 	path = upstream/zammad-docker-compose
 	url = https://github.com/zammad/zammad-docker-compose.git
 	shallow = true
+[submodule "upstream/n8n"]
+	path = upstream/n8n
+	url = https://github.com/n8n-io/n8n.git
+	shallow = true
