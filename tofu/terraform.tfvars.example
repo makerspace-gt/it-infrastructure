@@ -1,3 +1,3 @@
 # Copy to terraform.tfvars and adjust. terraform.tfvars contains no secrets and may be committed.
-template_name = "Debian 13"
+template_name = "Debian 13 host-passthrough"
 network_name  = "public"
