@@ -34,3 +34,7 @@
 	path = upstream/authentik
 	url = https://github.com/goauthentik/authentik.git
 	shallow = true
+[submodule "upstream/arcane"]
+	path = upstream/arcane
+	url = https://github.com/getarcaneapp/arcane.git
+	shallow = true
