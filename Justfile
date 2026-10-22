@@ -19,6 +19,11 @@ setup:
 init:
     cd tofu && source env.sh && tofu init
 
+# Update the providers to the versions allowed in versions.tf
+[group('tofu')]
+upgrade:
+    cd tofu && source env.sh && tofu init -upgrade
+
 # Show planned changes after pulling the latest state
 [group('tofu')]
 plan:

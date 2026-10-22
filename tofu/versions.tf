@@ -2,9 +2,11 @@ terraform {
   required_version = ">= 1.10"
 
   required_providers {
+    # 1.4.0 is the last release that supports OpenNebula 5.12, which we still run.
+    # Raise the version after upgrading OpenNebula.
     opennebula = {
       source  = "OpenNebula/opennebula"
-      version = "~> 1.5"
+      version = "= 1.4.0"
     }
     http = {
       source  = "hashicorp/http"
