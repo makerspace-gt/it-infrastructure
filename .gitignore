@@ -1,0 +1,9 @@
+# Ansible Vault password, keep it in Vaultwarden
+.vault_pass
+
+# OpenTofu working files and state, the state is encrypted but not stored here yet
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
