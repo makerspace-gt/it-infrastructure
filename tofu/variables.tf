@@ -5,6 +5,6 @@ variable "template_name" {
 }
 
 variable "network_name" {
-  description = "Name of the OpenNebula virtual network for the VMs"
+  description = "Default OpenNebula virtual network, a VM in vms.tf can choose another one"
   type        = string
 }
