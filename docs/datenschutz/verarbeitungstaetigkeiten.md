@@ -174,7 +174,14 @@ Makerspace Gütersloh e.V., vertreten durch den Vorstand. Ansprechpersonen für 
 
 ### 15 Mitgliederverwaltung
 
-Zu ergänzen, sobald feststeht, mit welchem Werkzeug der Verein seine Mitglieder verwaltet.
+- **Zweck:** Verwaltung der Mitgliedschaft, Einzug der Beiträge per SEPA-Lastschrift
+- **Betroffene:** Mitglieder
+- **Daten:** Name, Anschrift, Kontaktdaten, Beginn und Ende der Mitgliedschaft, Beitrag, Kontoinhaber, IBAN, Mandatsreferenz und Datum des SEPA-Mandats
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO für die Mitgliedschaft nach Satzung, lit. c für steuerliche Aufbewahrungspflichten
+- **Empfänger:** Vorstand und Kassenwart, die Hausbank des Vereins für den Einzug der Lastschriften als eigener Verantwortlicher
+- **Drittland:** Nein
+- **Löschung:** Stammdaten nach Ende der Mitgliedschaft, soweit keine Aufbewahrungspflicht besteht. Buchungsbelege 10 Jahre. SEPA-Mandate mindestens 14 Monate nach dem letzten Einzug, wegen möglicher Rückforderungen
+- **Werkzeug:** Zu ergänzen
 
 ### 16 Webseite
 

@@ -19,6 +19,7 @@ Keine Auftragsverarbeitung, weil wir dort keine personenbezogenen Daten in unser
 | anstiftung mit reparatur-initiativen.org für Laufzettel | Laufzettel sind anonym |
 | anstiftung mit reparatur-initiativen.org für den Newsletter | Wir tragen E-Mail-Adressen nur auf Wunsch der Gäste ein, die Anmeldung schließen die Gäste selbst per Bestätigungsmail ab. Die anstiftung ist für den Versand damit voraussichtlich eigener Verantwortlicher. Das lassen wir uns von der anstiftung bestätigen |
 | Open Repair Alliance | Erhält nur anonyme Daten über die anstiftung |
+| Hausbank des Vereins | Führt die Lastschriften für die Beiträge in eigener Verantwortung aus, nach eigenen gesetzlichen Pflichten. Sie ist Empfängerin, kein Auftragsverarbeiter |
 | Let's Encrypt | Stellt Zertifikate für Domains aus, keine personenbezogenen Daten |
 
 ## Messenger
