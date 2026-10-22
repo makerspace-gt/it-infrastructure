@@ -4,7 +4,15 @@ variable "template_name" {
   default     = "Debian 13 host-passthrough"
 }
 
-variable "network_name" {
-  description = "Default OpenNebula virtual network, a VM in vms.tf can choose another one"
+variable "locations" {
+  description = "Hosts that belong together and the network they share. VMs refer to a location by its key."
+  type = map(object({
+    hosts   = list(string)
+    network = string
+  }))
+}
+
+variable "default_location" {
+  description = "Location for VMs that do not choose one"
   type        = string
 }

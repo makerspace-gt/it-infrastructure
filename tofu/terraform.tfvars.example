@@ -1,3 +1,12 @@
-# Copy to terraform.tfvars and adjust. terraform.tfvars contains no secrets and may be committed.
+# Copy to terraform.tfvars and adjust. terraform.tfvars contains no secrets and is committed.
 template_name = "Debian 13 host-passthrough"
-network_name  = "public"
+
+# Hosts that belong together and the network they share
+locations = {
+  example = {
+    hosts   = ["host1", "host2"]
+    network = "network-name"
+  }
+}
+
+default_location = "example"
