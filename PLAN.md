@@ -149,13 +149,38 @@ Mit dem Neuaufbau gehen wir auch den Datenschutz nach DSGVO an. Die meisten Baus
 
 Die Dokumente liegen nicht in einem öffentlichen Repo, soweit sie interne Abläufe oder Namen enthalten. Für das Verzeichnis und das Löschkonzept fangen wir mit Zammad an, weil MANUEL dort mit echten Gästedaten arbeitet.
 
+## Bedienung und Gestaltung
+
+Der Neuaufbau soll für Engagierte einfacher werden, nicht nur für Admins. Zwei Ziele stehen im Vordergrund. Zwischen den Diensten soll man leicht wechseln können, und alle Dienste sollen einheitlich aussehen.
+
+**Einfach wechseln**
+
+- **Eine Startseite für alles.** Das [Anwendungs-Dashboard von authentik](https://docs.goauthentik.io/add-secure-apps/applications/manage_apps/) zeigt jedem Mitglied genau die Dienste, für die es freigeschaltet ist, mit Logo und Link. Es ist die Startseite für alle Engagierten.
+- **Einmal anmelden.** Dank Single Sign-on über authentik wechselt man ohne neue Anmeldung von Zammad zu Nextcloud oder Discourse. Ausnahmen sind Vaultwarden, das bewusst eigenständig bleibt, und n8n, das OIDC nur in der Enterprise-Version anbietet.
+- **Sprechende Adressen.** Ein einheitliches Schema wie helpdesk, cloud, forum, fotos und passwort unter makerspace-gt.de macht Adressen leicht merkbar.
+- **Zurück zur Startseite.** Wo ein Dienst eigene Links in Kopfzeile oder Menü erlaubt, verweist einer auf die Startseite.
+- **Verständliche Fehlerseite.** Wer ohne NetBird eine interne Adresse aufruft, sieht über die [Fehlerseiten von Traefik](https://doc.traefik.io/traefik/middlewares/http/errorpages/) einen Hinweis, NetBird zu verbinden, mit Link zur Anleitung statt eines technischen Fehlers.
+- **NetBird ohne Hürde.** Der Client verbindet sich nach der [Installation](https://docs.netbird.io/get-started/install) automatisch beim Start. Die Anleitung für Engagierte zeigt die Einrichtung auf Laptop und Smartphone Schritt für Schritt.
+
+**Einheitlich aussehen**
+
+- **Eine Gestaltungsvorlage im Repo.** Logo, Favicon, Farben und Schrift liegen einmal unter branding/ und werden per Ansible in alle Dienste verteilt.
+- **Gestaltung pro Dienst.** Fast alle Dienste lassen sich anpassen, etwa [authentik](https://docs.goauthentik.io/customize/branding/), [Zammad](https://admin-docs.zammad.org/en/latest/settings/branding.html), [Nextcloud](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/theming.html), [Discourse](https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966) und [Forgejo](https://forgejo.org/docs/latest/admin/customization/). Wo nur Logo und Farbe gehen, reicht das.
+- **Deutsch als Standard.** Alle Dienste starten auf Deutsch, Begriffe wie Termin, Gerät und Reparatur heißen überall gleich.
+- **Barrierearm.** Ausreichende Kontraste und gut lesbare Schriften nach den [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) gelten für die Farben der Vorlage.
+
+**Mit Engagierten testen**
+
+- **Kurze Tests vor dem Umstellen.** Bevor ein Dienst umzieht, probieren zwei oder drei Engagierte ohne IT-Hintergrund typische Aufgaben aus, zum Beispiel ein Ticket beim Repair Café anlegen oder ein Dokument in Nextcloud finden.
+- **Auch auf dem Smartphone.** Beim Repair Café arbeiten Engagierte oft mit Tablet oder Smartphone, deshalb testen wir auch dort.
+
 ## Stufen
 
 Für [MANUEL](https://github.com/makerspace-gt/MANUEL/blob/main/PLAN.md) muss bis zum 31.12.2026 nur ein Teil stehen, der Rest folgt danach. Die Aufwände sind Schätzungen für ehrenamtliche Arbeit.
 
 | Stufe | Zeitraum | Inhalt | Aufwand |
 |---|---|---|---|
-| 1 | bis 31.12.2026 | Zugangs-VM mit authentik, NetBird und Vaultwarden, Helpdesk-VM mit Zammad und Umzug der Tickets | 20 bis 30 Stunden |
+| 1 | bis 31.12.2026 | Zugangs-VM mit authentik, NetBird und Vaultwarden, Helpdesk-VM mit Zammad und Umzug der Tickets, Gestaltungsvorlage und Startseite in authentik | 20 bis 30 Stunden |
 | 2 | Januar bis März 2027 | n8n auf der Helpdesk-VM, Monitoring-VM mit Uptime Kuma, Beszel und signal-cli-rest-api, Verzeichnis von Verarbeitungstätigkeiten, Löschkonzept und Datenschutzhinweise für Zammad und MANUEL | 20 bis 30 Stunden |
 | 3 | ab Frühjahr 2027 | Datenschutz für alle übrigen Dienste, Verwaltungs-VM mit Forgejo, Runner, OpenTofu, Arcane und Dependency-Track, Umzug von Nextcloud, Vikunja und Discourse, Aufteilung des Wikis, Immich und LanguageTool | 70 bis 120 Stunden |
 
@@ -191,6 +216,9 @@ Die alten VMs laufen weiter, bis der jeweilige Dienst auf der neuen VM geprüft 
 - [ ] Festlegen, welche Teile von Zammad, Discourse und Nextcloud für Gäste öffentlich bleiben
 - [ ] Weboberflächen Dienst für Dienst nur noch über NetBird erreichbar machen und Zugriffsregeln nach Gruppen aus authentik anlegen
 - [ ] Anleitung für Engagierte zum Einrichten des NetBird-Clients schreiben
+- [ ] Gestaltungsvorlage mit Logo, Favicon, Farben und Schrift unter branding/ anlegen
+- [ ] Startseite in authentik mit allen Diensten einrichten und Gestaltung von authentik anpassen
+- [ ] Fehlerseite in Traefik für Zugriffe ohne NetBird einrichten
 
 ## Stufe 1 Helpdesk-VM
 
@@ -198,6 +226,8 @@ Die alten VMs laufen weiter, bis der jeweilige Dienst auf der neuen VM geprüft 
 - [ ] Zammad in einer Version aufsetzen, die Ollama-Anbieter, Ticket Categorizer, Ticket Text Extractor und Embeddings für die Wissensdatenbank bietet
 - [ ] Tickets per resticker aus dem bisherigen Zammad übernehmen und dabei Wartezeiten in das neue Datumsfeld Termin überführen
 - [ ] Die angepasste ticket.rb nicht übernehmen
+- [ ] Gestaltung von Zammad aus der Vorlage übernehmen und Zammad an authentik anbinden
+- [ ] Ansichten für das Repair Café testen, zusammen mit Engagierten und auch auf Tablet und Smartphone
 - [ ] NetBird-Client installieren, siehe oben
 
 ## Upstream-Submodule
