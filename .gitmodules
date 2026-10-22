@@ -42,3 +42,7 @@
 	path = upstream/beszel
 	url = https://github.com/henrygd/beszel.git
 	shallow = true
+[submodule "upstream/opentofu"]
+	path = upstream/opentofu
+	url = https://github.com/opentofu/opentofu.git
+	shallow = true
