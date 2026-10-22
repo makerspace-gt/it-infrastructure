@@ -1,0 +1,161 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "just: setup",
+      "type": "shell",
+      "command": "just setup",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: tofu init",
+      "type": "shell",
+      "command": "just init",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: tofu plan",
+      "type": "shell",
+      "command": "just plan",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "group": {
+        "kind": "test"
+      }
+    },
+    {
+      "label": "just: tofu apply",
+      "type": "shell",
+      "command": "just apply",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: tofu destroy",
+      "type": "shell",
+      "command": "just destroy",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: tofu ips",
+      "type": "shell",
+      "command": "just ips",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: state-check",
+      "type": "shell",
+      "command": "just state-check",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: ansible bootstrap",
+      "type": "shell",
+      "command": "just bootstrap ${input:limit}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: ansible check",
+      "type": "shell",
+      "command": "just check ${input:user} ${input:limit}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: ansible deploy",
+      "type": "shell",
+      "command": "just deploy ${input:user} ${input:limit}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "just: fmt",
+      "type": "shell",
+      "command": "just fmt",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "just: lint",
+      "type": "shell",
+      "command": "just lint",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "user",
+      "type": "promptString",
+      "description": "Dein Admin-Konto auf den Servern, zum Beispiel igami"
+    },
+    {
+      "id": "limit",
+      "type": "promptString",
+      "description": "Host oder Gruppe, all für alle",
+      "default": "all"
+    }
+  ]
+}

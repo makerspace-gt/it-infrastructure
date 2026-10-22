@@ -12,7 +12,7 @@ Diese Anleitung führt durch die ersten Schritte mit OpenTofu und Ansible. Am En
 
 ## 1 Devcontainer öffnen
 
-Das Repo in VS Code öffnen und im Devcontainer neu öffnen. Beim ersten Start installiert [post-create.sh](../.devcontainer/post-create.sh) OpenTofu, just, Ansible, ansible-lint und die benötigten Collections. Alle Befehle stehen als Rezepte im [Justfile](../Justfile). Eine Übersicht zeigt:
+Das Repo in VS Code öffnen und im Devcontainer neu öffnen. Beim ersten Start installiert [post-create.sh](../.devcontainer/post-create.sh) OpenTofu, just, Ansible, ansible-lint und die benötigten Collections. Alle Befehle stehen als Rezepte im [Justfile](../Justfile). In VS Code stehen sie zusätzlich als Tasks im Menü Terminal unter Task ausführen, definiert in [tasks.json](../.vscode/tasks.json). Eine Übersicht im Terminal zeigt:
 
 ```bash
 just
